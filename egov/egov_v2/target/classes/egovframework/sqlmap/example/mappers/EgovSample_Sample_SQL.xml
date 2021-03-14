@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.sample.service.impl.SampleMapper">
+
+	<resultMap id="sample" type="egovframework.example.sample.service.SampleVO">
+		<result property="memberno" column="memberno"/>
+		<result property="kname" column="kname"/>
+		<result property="ename" column="ename"/>
+		<result property="jname" column="jname"/>
+		<result property="mynumber1" column="mynumber1"/>
+		<result property="mynumber2" column="mynumber2"/>
+		<result property="photo" column="photo"/>
+		<result property="year" column="year"/>
+		<result property="month" column="month"/>
+		<result property="day" column="day"/>
+		<result property="rdate" column="rdate"/>
+		<result property="udate" column="udate"/>
+		<result property="gender" column="gender"/>
+		<result property="stat" column="stat"/>
+		<result property="filename" column="filename"/>
+		<result property="filepath" column="filepath"/>
+		
+		
+	</resultMap>
+
+	<insert id="insertSample" parameterType="SampleVO">
+
+			INSERT INTO EMP
+				(   
+					  MEMBERNO
+					, KNAME
+					, ENAME
+					, JNAME
+					, MYNUMBER1
+					, MYNUMBER2
+					, PHOTO
+					, YEAR
+					, MONTH
+					, DAY
+					, RDATE
+					, GENDER
+					, STAT
+					, FILENAME
+					, FILEPATH	 )
+			VALUES ( 
+					  (SELECT MAX(MEMBERNO)+1 FROM EMP)
+				  	, #{kname, jdbcType=VARCHAR}
+					, #{ename, jdbcType=VARCHAR}
+					, #{jname, jdbcType=VARCHAR}
+					, #{mynumber1, jdbcType=VARCHAR}
+					, #{mynumber2, jdbcType=VARCHAR}
+					, #{photo, jdbcType=VARCHAR}
+					, #{year, jdbcType=VARCHAR}
+					, #{month, jdbcType=VARCHAR}
+					, #{day, jdbcType=VARCHAR}
+					, SYSDATE
+					, #{gender, jdbcType=VARCHAR}
+					, #{stat, jdbcType=VARCHAR}
+					, #{filename, jdbcType=VARCHAR}
+					, #{filepath, jdbcType=VARCHAR}				 
+					
+					)
+
+	</insert>
+
+	<update id="updateSample">
+
+			UPDATE EMP
+			SET 
+			   MEMBERNO=#{memberno ,jdbcType=INTEGER}
+		      <if test="kname != null and kname != ''">
+			 , KNAME=#{kname ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="ename != null and ename != ''">
+			 , ENAME=#{ename ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="jname != null and jname != ''">
+			 , JNAME=#{jname ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="mynumber1 != null and mynumber1 != ''">
+			 , MYNUMBER1=#{mynumber1 ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="mynumber2 != null and mynumber2 != ''">
+			 , MYNUMBER2=#{mynumber2 ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="year != null and year != ''">
+			 , YEAR=#{year ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="month != null and month != ''">
+			 , MONTH=#{month ,jdbcType=VARCHAR}
+			 </if>
+			 <if test="day != null and day != ''">
+			 , DAY=#{day ,jdbcType=VARCHAR}
+			 </if>
+			  <if test="gender != null and gender != ''">
+			 , GENDER= #{gender, jdbcType=VARCHAR}
+			 </if>
+			 <if test="stat != null and stat != ''">
+			 , STAT =  #{stat, jdbcType=VARCHAR}
+			 </if>
+			 <if test="filename != null and filename != ''">
+			 , FILENAME = #{filename, jdbcType=VARCHAR}
+			 </if>
+			 <if test="filepath != null and filepath != ''">
+			 , FILEPATH = #{filepath, jdbcType=VARCHAR}
+			 </if>
+			 , UDATE = SYSDATE
+		 WHERE MEMBERNO=#{memberno,jdbcType=INTEGER}
+
+	</update>
+
+	<delete id="deleteSample">
+
+			DELETE FROM EMP
+			WHERE MEMBERNO=#{memberno, jdbcType=INTEGER}
+
+	</delete>
+
+	<select id="selectSample" resultMap="sample">
+
+			SELECT
+				MEMBERNO
+				, KNAME
+				, ENAME
+				, JNAME
+				, MYNUMBER1
+				, MYNUMBER2
+				, PHOTO
+				, YEAR
+				, MONTH
+				, DAY
+				, RDATE
+				, UDATE
+				, GENDER
+				, STAT
+				, FILENAME
+				, FILEPATH	
+			FROM EMP
+			WHERE MEMBERNO=#{memberno, jdbcType=INTEGER}
+
+	</select>
+
+	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
+
+			SELECT
+				  MEMBERNO
+				, KNAME
+				, ENAME
+				, JNAME
+				, MYNUMBER1
+				, MYNUMBER2
+				, PHOTO
+				, YEAR
+				, MONTH
+				, DAY
+				, RDATE
+				, UDATE
+				, GENDER
+				, STAT
+				, FILENAME
+				, FILEPATH			  
+			FROM EMP
+			ORDER BY MEMBERNO DESC
+			<!-- WHERE 1=1 -->
+			<!-- <if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			ORDER BY ID ASC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex} -->
+	</select>
+
+	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM EMP
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND MEMBERNO LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	KNAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+	</select>
+
+</mapper>
