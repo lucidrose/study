@@ -82,5 +82,8 @@ public interface EgovSampleService {
 	 * @exception
 	 */
 	int selectSampleListTotCnt(SampleDefaultVO searchVO);
+	
+	// 상세 화면 조회하기
+	Object getBillDtl(SampleVO sampleVO) throws Exception;
 
 }

@@ -83,6 +83,11 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		sampleDAO.insertSample(vo);
 	}
 
+	// 상세페이지 조회
+	public Object getBillDtl(SampleVO sampleVO) throws Exception {
+		Object info = sampleDAO.selectBillDtl(sampleVO);
+		return info;
+	}
 	/**
 	 * 글을 수정한다.
 	 * @param vo - 수정할 정보가 담긴 SampleVO

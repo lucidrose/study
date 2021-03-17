@@ -87,5 +87,8 @@ public interface SampleMapper {
 	 * @exception
 	 */
 	int selectSampleListTotCnt(SampleDefaultVO searchVO);
+	
+	// 상세 메서드
+	Object selectBillDtl(SampleVO sampleVO) throws Exception;
 
 }

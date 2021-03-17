@@ -154,11 +154,13 @@ public class EgovSampleController {
 	 * @exception Exception
 	 */
 	@RequestMapping("/billDetailView.do")
-	public String updateSampleView(@RequestParam("selectedID") String billNo, @ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
-		SampleVO sampleVO = new SampleVO();
-		sampleVO.setBillNo(Integer.parseInt(billNo));
+	public String detailView(@ModelAttribute("searchVO") SampleVO sampleVO, Model model) throws Exception {
+		//SampleVO sampleVO = new SampleVO();
+		//sampleVO.setBillNo(Integer.parseInt(billNo));
 		// 변수명은 CoC 에 따라 sampleVO
 		//model.addAttribute(selectSample(sampleVO, searchVO));
+		Object info = sampleService.getBillDtl(sampleVO);
+		model.addAttribute("resultList",info);
 		return "sample/billDetail";
 	}
 
