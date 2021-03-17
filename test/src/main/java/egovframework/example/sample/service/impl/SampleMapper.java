@@ -54,7 +54,7 @@ public interface SampleMapper {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void updateSample(SampleVO vo) throws Exception;
+	void updateDetail(SampleVO vo) throws Exception;
 
 	/**
 	 * 글을 삭제한다.

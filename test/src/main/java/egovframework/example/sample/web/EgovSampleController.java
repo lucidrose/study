@@ -184,7 +184,7 @@ public class EgovSampleController {
 	 * @return "forward:/egovSampleList.do"
 	 * @exception Exception
 	 */
-	@RequestMapping("/updateSample.do")
+	@RequestMapping("/updateDetail.do")
 	public String updateSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO, BindingResult bindingResult, Model model, SessionStatus status)
 			throws Exception {
 
@@ -192,7 +192,7 @@ public class EgovSampleController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
+			return "sample/billDetail";
 		}
 
 		sampleService.updateSample(sampleVO);

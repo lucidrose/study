@@ -67,10 +67,10 @@
                 <a href="javascript:fn_close();">닫기</a>
                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
             </span>
-        	  <span class="btn_blue_l">
-                  <a href="javascript:fn_save();">저장</a>
-                  <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
-              </span>
+       	  	<span class="btn_blue_l">
+                 <a href="javascript:fn_save();">저장</a>
+                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+            </span>
 		</div>
  	</form:form>
  	

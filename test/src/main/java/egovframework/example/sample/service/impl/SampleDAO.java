@@ -60,8 +60,8 @@ public class SampleDAO extends EgovAbstractDAO {
 	 * @return void형
 	 * @exception Exception
 	 */
-	public void updateSample(SampleVO vo) throws Exception {
-		update("sampleDAO.updateSample", vo);
+	public void updateDetail(SampleVO vo) throws Exception {
+		update("sampleDAO.updateDetail", vo);
 	}
 
 	/**

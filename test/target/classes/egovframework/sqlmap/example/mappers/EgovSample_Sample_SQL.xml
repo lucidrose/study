@@ -33,10 +33,12 @@
 	 <select id="selectBillDtl" parameterType="SampleVO" resultType="egovMap">
 	     SELECT
 					BILL_NO
+				  , B.USE_DTL_CD
 				  , D.USE_DTL_NM
 				  , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE
 				  , TO_CHAR(USE_DATE,'yyyy-mm-dd') AS USE_DATE
 				  , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE
+				  , B.STATE_CD
 				  , S.STATE_NM
 				  , TO_CHAR(STATE_DATE,'yyyy-mm-dd') AS STATE_DATE
 				  , ETC
@@ -51,18 +53,30 @@
 				AND B.BILL_NO = #{billNo, jdbcType=INTEGER}
 	     	
 	 </select>
-<!--
-	<update id="updateSample">
 
-			UPDATE SAMPLE
-			SET ID=#{id}
-				, NAME=#{name}
-				, DESCRIPTION=#{description}
-				, USE_YN=#{useYn}
-				  WHERE ID=#{id}
+	<update id="updateDetail" parameterType="SampleVO">
+
+			UPDATE TB_BILL
+			SET
+				, USE_DTL_CD = #{useDtlCd, jdbcType=VARCHAR}
+				, USE_DATE = #{useDate, jdbcType=Date}
+				, USE_PRICE = #{usdPrice, jdbcType=VARCHAR}
+				<if test="fileNm != null and fileNm != '' ">
+					, FILE_NM = #{fileNm, jdbcType=VARCHAR}
+				</if>
+				<if test="filePath != null and filePath != '' ">
+					, FILE_PATH = #{filePath, jdbcType=VARCHAR}
+				</if>
+				, STATE_CD = #{stateCd, jdbcType=VARCHAR}
+				, STATE_DATE = #{stateDate, jdbcType=Date}
+				, APPROVE_PRICE = #{approvePrice, jdbcType=VARCHAR}
+				, ETC = #{etc, jdbcType=VARCHAR}
+				, UP_DATE = SYSDATE)
+			WEHRE 1=1 
+				AND B.BILL_NO = #{billNo, jdbcType=INTEGER}
 
 	</update>
-
+<!--
 	<delete id="deleteSample">
 
 			DELETE FROM SAMPLE

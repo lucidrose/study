@@ -43,7 +43,7 @@
         
         // 글 수정 및 삭제 팝업화면
         function fn_detailView(billNo) {
-        	popup = window.open("/billDetailView.do?billNo=" + billNo,"PopupDtl","width=350, height=650");
+        	popup = window.open("/billDetailView.do?billNo=" + billNo,"PopupDtl","width=550, height=470");
         }
     </script>
 </head>

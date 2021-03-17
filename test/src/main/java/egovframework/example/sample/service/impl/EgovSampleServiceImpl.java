@@ -96,7 +96,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public void updateSample(SampleVO vo) throws Exception {
-		sampleDAO.updateSample(vo);
+		sampleDAO.updateDetail(vo);
 	}
 
 	/**
