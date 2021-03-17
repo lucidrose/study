@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.sample.service.impl.SampleMapper">
+
+	<resultMap id="sample" type="egovframework.example.sample.service.SampleVO">
+		<!-- <result property="billNum" column="billNum"/>
+		<result property="no" column="no"/>
+		<result property="useDate" column="useDate"/>
+		<result property="useDetailCode" column="useDetail"/> -->
+	</resultMap>
+
+	 <insert id="insertSample" parameterType="SampleVO">
+
+			INSERT INTO SAMPLE
+				( ID
+				  , NAME
+				  , DESCRIPTION
+				  , USE_YN
+				  , REG_USER )
+			VALUES ( #{id}
+				  , #{name}
+				  , #{description}
+				  , #{useYn}
+				  , #{regUser} )
+
+	</insert>
+<!--
+	<update id="updateSample">
+
+			UPDATE SAMPLE
+			SET ID=#{id}
+				, NAME=#{name}
+				, DESCRIPTION=#{description}
+				, USE_YN=#{useYn}
+				  WHERE ID=#{id}
+
+	</update>
+
+	<delete id="deleteSample">
+
+			DELETE FROM SAMPLE
+			WHERE ID=#{id}
+
+	</delete>
+
+	<select id="selectSample" resultMap="sample">
+
+			SELECT
+				ID, NAME, DESCRIPTION, USE_YN, REG_USER
+			FROM SAMPLE
+			WHERE ID=#{id}
+
+	</select> -->
+
+	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
+
+			SELECT
+					BILLNUM
+				  , NO
+				  , D.USEDETAILNAME
+				  , USEPRICE
+				  , USEDATE
+				  , APPROVEPRICE
+				  , S.STATENAME
+				  , STATEDATE
+				  , ETC
+				  , FILENAME
+				  , FILEPATH
+				  , REGDATE
+				  , UPDATEDATE
+			FROM TB_BILL B
+			LEFT OUTER JOIN TB_USEDETAIL D
+				 ON D.USEDETAILCODE = B.USEDETAILCODE
+			LEFT OUTER JOIN TB_STATE S
+				 ON S.STATECODE = B.STATECODE
+			WHERE 1=1
+			<!-- 등록연월 -->
+			<!-- <if test="searchYm != null and searchYm != ''">
+			    AND TO_CHAR()
+			</if> -->
+			<!-- 사용내역 -->
+			<if test="searchDetailCode != null and searchDetailCode != ''">
+				AND D.USEDETAILCODE = #{searchDetailCode, jdbcType=VARCHAR}    
+			</if>
+			<!-- 처리상태 -->
+			<if test="searchStateCode != null and searchStateCode != ''">
+				AND S.STATECODE = #{searchStateCode, jdbcType=VARCHAR}    
+			</if>
+			ORDER BY USEDATE DESC
+	</select>
+
+	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM TB_BILL
+			<!-- WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if> -->
+	</select>
+
+</mapper>
