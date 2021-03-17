@@ -63,16 +63,16 @@
 					BILL_NO
 				  , NO
 				  , D.USE_DTL_NM
-				  , USE_PRICE
-				  , USE_DATE
-				  , APPROVE_PRICE
+				  , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE
+				  , TO_CHAR(USE_DATE,'yyyy-mm-dd') AS USE_DATE
+				  , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE
 				  , S.STATE_NM
-				  , STATE_DATE
+				  , TO_CHAR(STATE_DATE,'yyyy-mm-dd') AS STATE_DATE
 				  , ETC
 				  , FILE_NM
 				  , FILE_PATH
-				  , REG_DATE
-				  , UP_DATE
+				  , TO_CHAR(REG_DATE,'yyyy-mm-dd') AS REG_DATE
+				  , TO_CHAR(UP_DATE,'yyyy-mm-dd') AS UP_DATE
 			FROM TB_BILL B
 			LEFT OUTER JOIN TB_USEDETAIL D
 				 ON D.USE_DTL_CD = B.USE_DTL_CD

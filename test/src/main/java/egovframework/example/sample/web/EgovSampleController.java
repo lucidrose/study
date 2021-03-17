@@ -150,16 +150,16 @@ public class EgovSampleController {
 	 * @param id - 수정할 글 id
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param model
-	 * @return "egovSampleRegister"
+	 * @return "billDetail.do"
 	 * @exception Exception
 	 */
-	@RequestMapping("/updateSampleView.do")
-	public String updateSampleView(@RequestParam("selectedId") String id, @ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
+	@RequestMapping("/billDetailView.do")
+	public String updateSampleView(@RequestParam("selectedID") String billNo, @ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
 		SampleVO sampleVO = new SampleVO();
-		//ampleVO.setId(id);
+		sampleVO.setBillNo(Integer.parseInt(billNo));
 		// 변수명은 CoC 에 따라 sampleVO
-		model.addAttribute(selectSample(sampleVO, searchVO));
-		return "sample/egovSampleRegister";
+		//model.addAttribute(selectSample(sampleVO, searchVO));
+		return "sample/billDetail";
 	}
 
 	/**

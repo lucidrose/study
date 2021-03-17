@@ -36,9 +36,15 @@
            			+ '&searchDetailCode=' + $("#searchDetailCode").val()
            			+ '&searchStateCode=' + $("#searchStateCode").val();
         }
-        
+        // 글 등록 팝업
         function fn_addView() {
         	popup = window.open("/billAddView.do", "PopupAdd", "width=350, height=150");
+        }
+        
+        // 글 수정 및 삭제 팝업화면
+        function fn_detailView(id) {
+        	document.listForm.selectedID.value = id;
+        	popup = window.open("/billDetailView.do","PopupDtl","width=350, height=450");
         }
     </script>
 </head>
@@ -119,12 +125,12 @@
         			<caption style="visibility:hidden">카테고리ID, 케테고리명, 사용여부, Description, 등록자 표시하는 테이블</caption>
         			<colgroup>
         				<col width="30"/>
-        				<col width="80"/>
+        				<col width="100"/>
         				<col width="?"/>
         				<col width="90"/>
         				<col width="90"/>
         				<col width="50"/>
-        				<col width="80"/>
+        				<col width="100"/>
         			</colgroup>
         			<tr>
         				<th align="center">순번</th>
@@ -138,9 +144,9 @@
         			<c:forEach var="result" items="${resultList}" varStatus="status">
             			<tr>
             				<%-- <td align="center" class="listtd"><c:out value="${paginationInfo.totalRecordCount+1 - ((searchVO.pageIndex-1) * searchVO.pageSize + status.count)}"/></td> --%>
-            				<td align="center" class="listtd"><a href="javascript:fn_egov_select('<c:out value="${result.billNo}"/>')"><c:out value="${result.billNo}"/></a></td>
+            				<td align="center" class="listtd"><c:out value="${result.billNo}"/></a></td>
             				<td align="left" class="listtd"><c:out value="${result.useDate}"/>&nbsp;</td>
-            				<td align="center" class="listtd"><c:out value="${result.useDtlNm}"/>&nbsp;</td>
+            				<td align="center" class="listtd"><a href="javascript:fn_detailView('<c:out value="${result.billNo}"/>')"><c:out value="${result.useDtlNm}"/>&nbsp;</td>
             				<td align="center" class="listtd"><c:out value="${result.usePrice}"/>&nbsp;</td>
             				<td align="center" class="listtd"><c:out value="${result.approvePrice}"/>&nbsp;</td>
             				<td align="center" class="listtd"><c:out value="${result.stateNm}"/>&nbsp;</td>

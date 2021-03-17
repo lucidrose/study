@@ -24,8 +24,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <c:set var="registerFlag" value="${empty sampleVO.id ? 'create' : 'modify'}"/>
-    <title>Sample <c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
-                  <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
+    <title>Sample 
     </title>
     <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/sample.css'/>"/>
     
