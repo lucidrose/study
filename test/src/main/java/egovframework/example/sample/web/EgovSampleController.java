@@ -15,16 +15,17 @@
  */
 package egovframework.example.sample.web;
 
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import egovframework.example.sample.service.EgovSampleService;
-import egovframework.example.sample.service.SampleDefaultVO;
-import egovframework.example.sample.service.SampleVO;
-
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
+import egovframework.example.sample.service.EgovSampleService;
+import egovframework.example.sample.service.SampleDefaultVO;
+import egovframework.example.sample.service.SampleVO;
+import egovframework.rte.fdl.property.EgovPropertyService;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 /**
  * @Class Name : EgovSampleController.java
  * @Description : EgovSample Controller Class
@@ -117,6 +125,7 @@ public class EgovSampleController {
 	@RequestMapping(value = "/billAddView.do", method = RequestMethod.GET)
 	public String addBillView(@ModelAttribute("searchVO") SampleVO sampleVO, String insertYn, ModelMap model) throws Exception {
 		//model.addAttribute("sampleVO", new SampleVO());
+		model.addAttribute("insertYn", insertYn);
 		return "sample/billAdd";
 	}
 
@@ -142,7 +151,7 @@ public class EgovSampleController {
 
 		sampleService.insertSample(sampleVO);
 		status.setComplete();
-		return "forward:/egovSampleList.do";
+		return "redirect:/billAddView.do?insertYn=Y";
 	}
 
 	/**
@@ -154,15 +163,19 @@ public class EgovSampleController {
 	 * @exception Exception
 	 */
 	@RequestMapping("/billDetailView.do")
-	public String detailView(@ModelAttribute("searchVO") SampleVO sampleVO, Model model) throws Exception {
+	public String detailView(@ModelAttribute("searchVO") SampleVO sampleVO,String updateYn, String deleteYn, Model model) throws Exception {
 		//SampleVO sampleVO = new SampleVO();
 		//sampleVO.setBillNo(Integer.parseInt(billNo));
 		// 변수명은 CoC 에 따라 sampleVO
 		//model.addAttribute(selectSample(sampleVO, searchVO));
 		Object info = sampleService.getBillDtl(sampleVO);
+		model.addAttribute("updateYn", updateYn);
+		model.addAttribute("deleteYn", deleteYn);
 		model.addAttribute("resultList",info);
 		return "sample/billDetail";
 	}
+	
+	
 
 	/**
 	 * 글을 조회한다.
@@ -185,19 +198,13 @@ public class EgovSampleController {
 	 * @exception Exception
 	 */
 	@RequestMapping("/updateDetail.do")
-	public String updateSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO, BindingResult bindingResult, Model model, SessionStatus status)
+	public String updateSample( @ModelAttribute("searchVO") SampleVO sampleVO)
 			throws Exception {
-
-		beanValidator.validate(sampleVO, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("sampleVO", sampleVO);
-			return "sample/billDetail";
-		}
-
+		System.out.println("sampleVO : " + sampleVO);
 		sampleService.updateSample(sampleVO);
-		status.setComplete();
-		return "forward:/egovSampleList.do";
+		System.out.println("sampleVO : " + sampleVO);
+		/*return "forward:/egovSampleList.do";*/
+		return "redirect:/billDetailView.do?billNo=" + sampleVO.getBillNo() + "&updateYn=Y";
 	}
 
 	/**
@@ -208,11 +215,107 @@ public class EgovSampleController {
 	 * @return "forward:/egovSampleList.do"
 	 * @exception Exception
 	 */
-	@RequestMapping("/deleteSample.do")
-	public String deleteSample(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO, SessionStatus status) throws Exception {
+	@RequestMapping("/delete.do")
+	public String deleteSample(@ModelAttribute("searchVO") SampleVO sampleVO) throws Exception {
 		sampleService.deleteSample(sampleVO);
-		status.setComplete();
-		return "forward:/egovSampleList.do";
+		return "redirect:/billDetailView.do?deleteYn=Y";
 	}
+	
+	
+	
+	@RequestMapping(value = "/billExcelDown.do")
+	public void billExcelDown(@ModelAttribute("searchVO") SampleVO sampleVO, HttpServletResponse response) throws Exception {
+		
+		OutputStream out = null;
+        
+        try {
+            HSSFWorkbook workbook = BillExcelDownload(sampleVO);
+            
+            Date today = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+            System.out.println("--------------------" + format.format(today));
+            response.reset();
+            response.setHeader("Content-Disposition", "attachment;filename=bill_" + format.format(today) + ".xls");
+            response.setContentType("application/vnd.ms-excel");
+            out = new BufferedOutputStream(response.getOutputStream());
+            
+            workbook.write(out);
+            out.flush();
+            
+        } catch (Exception e) {
+        	System.out.println("exception during downloading excel file");
+        	e.printStackTrace();
+        } finally {
+            if(out != null) out.close();
+        }    
+		
+	}
+	
+	
+	
+	//이현희:47 엑셀다운로드 객체 생성
+	public HSSFWorkbook BillExcelDownload(SampleVO sampleVO) throws Exception {
+        
+        
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        
+        HSSFSheet sheet = workbook.createSheet("엑셀시트명");
+        
+        HSSFRow row = null;
+        
+        HSSFCell cell = null;
+        
+        List<?> list = sampleService.selectSampleList(sampleVO);
+        
+        row = sheet.createRow(0);
+        String[] headerKey = {"순번", "사용일", "사용내역", "사용금액", "승인금액", "처리상태", "등록일"};
+        
+        for(int i=0; i<headerKey.length; i++) {
+            cell = row.createCell(i);
+            cell.setCellValue(headerKey[i]);
+        }
+        
+        for(int i=0; i<list.size(); i++) {
+            row = sheet.createRow(i + 1);
+            Map<String, Object> vo = (Map<String, Object>)list.get(i);
+            // 순번
+            cell = row.createCell(0);
+//            cell.setCellValue(vo.getEx1());
+            cell.setCellValue(String.valueOf(vo.get("no")));
+            
+            // 사용일
+            cell = row.createCell(1);
+//            cell.setCellValue(vo.getUseDt());
+            cell.setCellValue((String)vo.get("useDate"));
+            
+            // 사용내역
+            cell = row.createCell(2);
+//            cell.setCellValue(vo.getDtlNm());
+            cell.setCellValue((String)vo.get("useDtlNm"));
+            
+            // 사용금액
+            cell = row.createCell(3);
+//            cell.setCellValue(vo.getUseAmt());
+            cell.setCellValue(String.valueOf(vo.get("usePrice")));
+            
+            // 승인금액
+            cell = row.createCell(4);
+//            cell.setCellValue(vo.getApprAmt());
+            cell.setCellValue(String.valueOf(vo.get("apprAmt")));
+            
+            // 처리상태
+            cell = row.createCell(5);
+//            cell.setCellValue(vo.getStatusNm());
+            cell.setCellValue((String)vo.get("stateNm"));
+            
+            // 등록일
+            cell = row.createCell(6);
+//            cell.setCellValue(vo.getRegDt());
+            cell.setCellValue((String)vo.get("regDt"));
+ 
+        }
+        
+        return workbook;
+    }
 
 }

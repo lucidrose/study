@@ -3,10 +3,15 @@
 <mapper namespace="egovframework.example.sample.service.impl.SampleMapper">
 
 	<resultMap id="sample" type="egovframework.example.sample.service.SampleVO">
-		<!-- <result property="billNum" column="billNum"/>
-		<result property="no" column="no"/>
+		<result property="billNo" column="billNo"/>
 		<result property="useDate" column="useDate"/>
-		<result property="useDetailCode" column="useDetail"/> -->
+		<result property="usePrice" column="usePrice"/>
+		<result property="fileNm" column="fileNm"/>
+		<result property="filePath" column="filePath"/>
+		<result property="stateCd" column="stateCd"/>
+		<result property="stateDate" column="stateDate"/>
+		<result property="approvePrice" column="approvePrice"/>
+		
 	</resultMap>
 
 	 <insert id="insertSample" parameterType="SampleVO">
@@ -18,32 +23,34 @@
 				  , USE_PRICE
 				  , FILE_NM
 				  , FILE_PATH 
+				  , STATE_CD
 				  , REG_DATE)
 			VALUES ( 
 					(SELECT NVL(MAX(BILL_NO), 0) + 1 FROM TB_BILL)
 				  , #{useDtlCd, jdbcType=VARCHAR}
-				  , #{useDate, jdbcType=DATE}
+				  , #{useDate, jdbcType=VARCHAR}
 				  , #{usePrice, jdbcType=VARCHAR}
 				  , #{fileNm, jdbcType=VARCHAR}
 				  , #{filePath, jdbcType=VARCHAR}
-				  , SYSDATE )
+				  , '01'
+				  , TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:Mi:SS') )
 
 	</insert>
 	
 	 <select id="selectBillDtl" parameterType="SampleVO" resultType="egovMap">
 	     SELECT
-					BILL_NO
+					B.BILL_NO
 				  , B.USE_DTL_CD
 				  , D.USE_DTL_NM
-				  , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE
-				  , TO_CHAR(USE_DATE,'yyyy-mm-dd') AS USE_DATE
-				  , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE
+				  , B.USE_PRICE
+				  , B.USE_DATE
+				  , B.APPROVE_PRICE
 				  , B.STATE_CD
 				  , S.STATE_NM
-				  , TO_CHAR(STATE_DATE,'yyyy-mm-dd') AS STATE_DATE
-				  , ETC
-				  , FILE_NM
-				  , FILE_PATH
+				  , B.STATE_DATE
+				  , B.ETC
+				  , B.FILE_NM
+				  , B.FILE_PATH
 			FROM TB_BILL B
 			LEFT OUTER JOIN TB_USEDETAIL D
 				 ON D.USE_DTL_CD = B.USE_DTL_CD
@@ -57,10 +64,10 @@
 	<update id="updateDetail" parameterType="SampleVO">
 
 			UPDATE TB_BILL
-			SET
-				, USE_DTL_CD = #{useDtlCd, jdbcType=VARCHAR}
-				, USE_DATE = #{useDate, jdbcType=Date}
-				, USE_PRICE = #{usdPrice, jdbcType=VARCHAR}
+			SET  
+				 USE_DTL_CD = #{useDtlCd, jdbcType=VARCHAR}
+				, USE_DATE = #{useDate, jdbcType=VARCHAR}
+				, USE_PRICE = #{usePrice, jdbcType=VARCHAR}
 				<if test="fileNm != null and fileNm != '' ">
 					, FILE_NM = #{fileNm, jdbcType=VARCHAR}
 				</if>
@@ -68,22 +75,21 @@
 					, FILE_PATH = #{filePath, jdbcType=VARCHAR}
 				</if>
 				, STATE_CD = #{stateCd, jdbcType=VARCHAR}
-				, STATE_DATE = #{stateDate, jdbcType=Date}
+				, STATE_DATE = #{stateDate, jdbcType=VARCHAR}
 				, APPROVE_PRICE = #{approvePrice, jdbcType=VARCHAR}
 				, ETC = #{etc, jdbcType=VARCHAR}
-				, UP_DATE = SYSDATE)
-			WEHRE 1=1 
-				AND B.BILL_NO = #{billNo, jdbcType=INTEGER}
+				, UP_DATE = TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:Mi:SS') 
+			WHERE BILL_NO = #{billNo, jdbcType=INTEGER}
 
 	</update>
-<!--
+
 	<delete id="deleteSample">
 
-			DELETE FROM SAMPLE
-			WHERE ID=#{id}
+			DELETE FROM TB_BILL
+			WHERE BILL_NO = #{billNo, jdbcType=INTEGER}
 
 	</delete>
-
+<!--
 	<select id="selectSample" resultMap="sample">
 
 			SELECT
@@ -96,19 +102,21 @@
 	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
 
 			SELECT
-					BILL_NO
-				  , NO
+					B.BILL_NO
+				  , B.NO
 				  , D.USE_DTL_NM
-				  , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE
-				  , TO_CHAR(USE_DATE,'yyyy-mm-dd') AS USE_DATE
-				  , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE
+				  <!-- , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE -->
+				  , B.USE_PRICE
+				  , B.USE_DATE
+				  <!-- , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE -->
+				  , B.APPROVE_PRICE
 				  , S.STATE_NM
-				  , TO_CHAR(STATE_DATE,'yyyy-mm-dd') AS STATE_DATE
-				  , ETC
-				  , FILE_NM
-				  , FILE_PATH
-				  , TO_CHAR(REG_DATE,'yyyy-mm-dd') AS REG_DATE
-				  , TO_CHAR(UP_DATE,'yyyy-mm-dd') AS UP_DATE
+				  , B.STATE_DATE
+				  , B.ETC
+				  , B.FILE_NM
+				  , B.FILE_PATH
+				  , SUBSTR(REG_DATE,0,10) AS REG_DATE
+				  , SUBSTR(UP_DATE,0,10) AS UP_DATE
 			FROM TB_BILL B
 			LEFT OUTER JOIN TB_USEDETAIL D
 				 ON D.USE_DTL_CD = B.USE_DTL_CD
@@ -127,7 +135,7 @@
 			<if test="searchStateCode != null and searchStateCode != ''">
 				AND S.STATE_CD = #{searchStateCode, jdbcType=VARCHAR}    
 			</if>
-			ORDER BY REG_DATE DESC
+			ORDER BY B.REG_DATE DESC
 	</select>
 
 	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">

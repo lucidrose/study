@@ -3,46 +3,91 @@
 <mapper namespace="egovframework.example.sample.service.impl.SampleMapper">
 
 	<resultMap id="sample" type="egovframework.example.sample.service.SampleVO">
-		<!-- <result property="billNum" column="billNum"/>
-		<result property="no" column="no"/>
+		<result property="billNo" column="billNo"/>
 		<result property="useDate" column="useDate"/>
-		<result property="useDetailCode" column="useDetail"/> -->
+		<result property="usePrice" column="usePrice"/>
+		<result property="fileNm" column="fileNm"/>
+		<result property="filePath" column="filePath"/>
+		<result property="stateCd" column="stateCd"/>
+		<result property="stateDate" column="stateDate"/>
+		<result property="approvePrice" column="approvePrice"/>
+		
 	</resultMap>
 
 	 <insert id="insertSample" parameterType="SampleVO">
 
-			INSERT INTO SAMPLE
-				( ID
-				  , NAME
-				  , DESCRIPTION
-				  , USE_YN
-				  , REG_USER )
-			VALUES ( #{id}
-				  , #{name}
-				  , #{description}
-				  , #{useYn}
-				  , #{regUser} )
+			INSERT INTO TB_BILL
+				( BILL_NO
+				  , USE_DTL_CD
+				  , USE_DATE
+				  , USE_PRICE
+				  , FILE_NM
+				  , FILE_PATH 
+				  , REG_DATE)
+			VALUES ( 
+					(SELECT NVL(MAX(BILL_NO), 0) + 1 FROM TB_BILL)
+				  , #{useDtlCd, jdbcType=VARCHAR}
+				  , #{useDate, jdbcType=VARCHAR}
+				  , #{usePrice, jdbcType=VARCHAR}
+				  , #{fileNm, jdbcType=VARCHAR}
+				  , #{filePath, jdbcType=VARCHAR}
+				  , SYSDATE )
 
 	</insert>
-<!--
-	<update id="updateSample">
+	
+	 <select id="selectBillDtl" parameterType="SampleVO" resultType="egovMap">
+	     SELECT
+					B.BILL_NO
+				  , B.USE_DTL_CD
+				  , D.USE_DTL_NM
+				  , B.USE_PRICE
+				  , B.USE_DATE
+				  , B.APPROVE_PRICE
+				  , B.STATE_CD
+				  , S.STATE_NM
+				  , B.STATE_DATE
+				  , B.ETC
+				  , B.FILE_NM
+				  , B.FILE_PATH
+			FROM TB_BILL B
+			LEFT OUTER JOIN TB_USEDETAIL D
+				 ON D.USE_DTL_CD = B.USE_DTL_CD
+			LEFT OUTER JOIN TB_STATE S
+				 ON S.STATE_CD = B.STATE_CD
+			WHERE 1=1
+				AND B.BILL_NO = #{billNo, jdbcType=INTEGER}
+	     	
+	 </select>
 
-			UPDATE SAMPLE
-			SET ID=#{id}
-				, NAME=#{name}
-				, DESCRIPTION=#{description}
-				, USE_YN=#{useYn}
-				  WHERE ID=#{id}
+	<update id="updateDetail" parameterType="SampleVO">
+
+			UPDATE TB_BILL
+			SET  
+				 USE_DTL_CD = #{useDtlCd, jdbcType=VARCHAR}
+				, USE_DATE = #{useDate, jdbcType=VARCHAR}
+				, USE_PRICE = #{usePrice, jdbcType=VARCHAR}
+				<if test="fileNm != null and fileNm != '' ">
+					, FILE_NM = #{fileNm, jdbcType=VARCHAR}
+				</if>
+				<if test="filePath != null and filePath != '' ">
+					, FILE_PATH = #{filePath, jdbcType=VARCHAR}
+				</if>
+				, STATE_CD = #{stateCd, jdbcType=VARCHAR}
+				, STATE_DATE = #{stateDate, jdbcType=VARCHAR}
+				, APPROVE_PRICE = #{approvePrice, jdbcType=VARCHAR}
+				, ETC = #{etc, jdbcType=VARCHAR}
+				, UP_DATE = SYSDATE 
+			WHERE BILL_NO = #{billNo, jdbcType=INTEGER}
 
 	</update>
 
 	<delete id="deleteSample">
 
-			DELETE FROM SAMPLE
-			WHERE ID=#{id}
+			DELETE FROM TB_BILL
+			WHERE BILL_NO = #{billNo, jdbcType=INTEGER}
 
 	</delete>
-
+<!--
 	<select id="selectSample" resultMap="sample">
 
 			SELECT
@@ -55,24 +100,26 @@
 	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
 
 			SELECT
-					BILLNUM
-				  , NO
-				  , D.USEDETAILNAME
-				  , USEPRICE
-				  , USEDATE
-				  , APPROVEPRICE
-				  , S.STATENAME
-				  , STATEDATE
-				  , ETC
-				  , FILENAME
-				  , FILEPATH
-				  , REGDATE
-				  , UPDATEDATE
+					B.BILL_NO
+				  , B.NO
+				  , D.USE_DTL_NM
+				  <!-- , TO_CHAR(USE_PRICE,'999,999,999,999') AS USE_PRICE -->
+				  , B.USE_PRICE
+				  , B.USE_DATE
+				  <!-- , TO_CHAR(APPROVE_PRICE,'999,999,999,999') AS APPROVE_PRICE -->
+				  , B.APPROVE_PRICE
+				  , S.STATE_NM
+				  , B.STATE_DATE
+				  , B.ETC
+				  , B.FILE_NM
+				  , B.FILE_PATH
+				  , TO_CHAR(REG_DATE,'yyyy-mm-dd') AS REG_DATE
+				  , TO_CHAR(UP_DATE,'yyyy-mm-dd') AS UP_DATE
 			FROM TB_BILL B
 			LEFT OUTER JOIN TB_USEDETAIL D
-				 ON D.USEDETAILCODE = B.USEDETAILCODE
+				 ON D.USE_DTL_CD = B.USE_DTL_CD
 			LEFT OUTER JOIN TB_STATE S
-				 ON S.STATECODE = B.STATECODE
+				 ON S.STATE_CD = B.STATE_CD
 			WHERE 1=1
 			<!-- 등록연월 -->
 			<!-- <if test="searchYm != null and searchYm != ''">
@@ -80,13 +127,13 @@
 			</if> -->
 			<!-- 사용내역 -->
 			<if test="searchDetailCode != null and searchDetailCode != ''">
-				AND D.USEDETAILCODE = #{searchDetailCode, jdbcType=VARCHAR}    
+				AND D.USE_DTL_CD = #{searchDetailCode, jdbcType=VARCHAR}    
 			</if>
 			<!-- 처리상태 -->
 			<if test="searchStateCode != null and searchStateCode != ''">
-				AND S.STATECODE = #{searchStateCode, jdbcType=VARCHAR}    
+				AND S.STATE_CD = #{searchStateCode, jdbcType=VARCHAR}    
 			</if>
-			ORDER BY USEDATE DESC
+			ORDER BY REG_DATE DESC
 	</select>
 
 	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">

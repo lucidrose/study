@@ -1,9 +1,9 @@
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt"    uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +11,8 @@
 	<link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/sample.css'/>"/>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<title> 경비 등록 / 수정 </title>
-	<validator:javascript formName="sampleVO" staticJavascript="false" xhtml="true" cdata="false"/>
+	</head>	
 	<script type="text/javaScript" language="javascript" defer="defer">
-	
 		// 폼 시작할 때
 		$(document).ready(function() {
 			if('${resultList.stateCd}' == '01' || '${resultList.stateCd}' == '') {
@@ -23,36 +22,57 @@
 				$("#btnSave").hide();
 				$("#btnDel").hide();
 			}
+			
+			if('${updateYn}' == 'Y') {
+		    	   opener.parent.fn_popCallBack('mod');
+			   	   alert("저장되었습니다.");
+		        }
+			
+			if('${deleteYn}' == 'Y') {
+	    		alert("삭제되었습니다.");
+	    	   opener.parent.fn_popCallBack('del');
+	        } 
 		})
 		
-		// 저장버튼 실행할 때
+		// 저장버튼 실행할 때 - 업데이트
 		function fn_save() {
-			var url = "";
+		/* 	var url = "";
 			if('${resultList.billNo}'){
 				alert("succeess");
 	    		url = "<c:url value='/updateDetail.do'/>";
 	    	}
 			
 			console.log("url : " + url)
-	    	document.detailForm.action = url;
-	    	document.detailForm.method= "post";
-	    	document.detailForm.submit();
-	    	
-			/* document.detailForm.action = "<c:url value='/updateDetail.do'/>";
-			document.detailForm.method = "post";
-			document.detailForm.submit();
-			window.close(); */
-		/* 	
-			$("#detailForm").prop('action', 'updateDetail.do');
+	    	 */
+	    	/* $("#detailForm").prop('action', '/updateDetail.do');
 	        $("#detailForm").prop('method', 'post');
 	        $("#detailForm").submit(); */
+			document.detailForm.action = "<c:url value='/updateDetail.do'/>";
+         	document.detailForm.method= "post";
+         	document.detailForm.submit();
+         	
 		}
+		
+		function fn_delete() {
+			document.detailForm.action = "<c:url value='/delete.do'/>";
+         	document.detailForm.method= "post";
+         	document.detailForm.submit();
+		}
+		
+		function fn_close() {
+			window.close();
+		}
+		// 파일 변경 이벤ㅌ
+		function fn_fileChange() {
+    		$("#fileNmSpan").text('');
+    	}
 	
 	</script>
-</head>
+
 <body>
-	<form:form commandName="sampleVO"  id="detailForm"  name="detailForm" enctype="multipart/form-data">
-		<input type="text" id="billNo" name="billNo" value="${sampleVO.billNo}"/>
+	<form:form commandName="searchVO"  id="detailForm"  name="detailForm" enctype="multipart/form-data">
+		<%--  <form:input  path="billNo" cssClass="txt"  value="${resultList.billNo}"/> --%>
+		 <input  type="hidden" id="billNo"  name="billNo" value="${resultList.billNo}"/> 
 		<h3>사용내역</h3>
 		<table class="update" style="float: left;">
 		    <tr>
@@ -69,23 +89,28 @@
 				</td> 
 		    <tr>
 		       <th>사용일</th>
-		       <td><input name="useDate" type="date" value="${resultList.useDate}"></td>
+		      <%--  <td><input name="useDate" type="date" value="${resultList.useDate}"></td> --%>
+		       <td> <form:input path="useDate" id="currentDate" type="date" maxlength="8" value="${resultList.useDate}"/></td>
 		   </tr>
 		    <tr>
 		       <th>금액</th>
 		       <td><input name="usePrice" type="text" value="${resultList.usePrice}"></td>
 		   </tr>
 		    <tr>
-		       	<th>영수증</th>
-		    	<td><input name="imageFile" type="file" id="input_img" value="${resultList.fileNm}"></td>
-		  </tr>
+             <th>영수증</th>
+             <td>
+                <input type="file" id="uploadFile" name="uploadFile" onChange="fn_fileChange();"/>
+                <span id="fileNmSpan">${resultList.fileNm}</span>
+             </td>
+          </tr>
+		  
 		</table>
 		
-		<div class="update_image">
+		<%-- <div class="update_image">
 			<h3>영수증</h3>
-			<img id="img" style="height: 150px;"/>
+			<img src="/img/${resultList.filePath}${resultList.fileNm}" alt="파일이미지" style="height: 200px;" />
 			<br>
-		</div>
+		</div> --%>
 		<h3>청구내역</h3>
 		<table class="update">
 		    <tr>
@@ -112,14 +137,27 @@
 		       	<th>비고</th>
 		    	<td><input name="etc" type="text" value="${resultList.etc}"></td>
 		  </tr>
+		  <table>
+		  	<h3>영수증</h3>
+	      	<img src='/images/egovframework/example/${resultList.fileNm}' alt="파일이미지" style="height: 200px;" />
+	      
+		  </table>
 		</table>
-		<span class="btn_blue_l">
+		<span id="btnSave" class="btn_blue_l">
                  <a href="javascript:fn_save();">수정</a>
                  <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
         </span>
 		<!-- <input type="submit" id ="btnSave" value="저장" onclick="window.close()"/> -->
-		<input type="button" id="btnDel" value="삭제">
-		<input type="button" onclick="window.close()"value="닫기">
+		<!-- <input type="button" id="btnDel" value="삭제"> -->
+		<span id="btnDel" class="btn_blue_l">
+                 <a href="javascript:fn_delete();">삭제</a>
+                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+        </span>
+		<!-- <input type="button" onclick="window.close()"value="닫기"> -->
+		<span class="btn_blue_l">
+                 <a href="javascript:fn_close();">닫기</a>
+                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+        </span>
 	</form:form>
 </body>
 </html>

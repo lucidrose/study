@@ -15,8 +15,14 @@
 	    /* 글 등록 function */
 	    function fn_save() {
 	    	
-	    	console.log(">>>" + $("#useDetailCode").val())
+	    	/* if (!$("#uploadFile").val()) {
+	    		alert("영수증파일을 등록해주세요.");
+	    		$("#uploadFile").focus();
+	    		return;
+	    	} */
 	    	
+	    	console.log(">>>" + $("#useDetailCode").val())
+	    		    	
 	    	$("#listForm").prop('action', 'billAdd.do');
 	        $("#listForm").prop('method', 'post');
 	        $("#listForm").submit();
@@ -25,12 +31,17 @@
 	    
 	    $(document).ready(function() {
 	        console.log( "ready!" );
+	        if('${insertYn}' == 'Y') {
+			   	   alert("저장되었습니다.");
+		 		   opener.parent.fn_popCallBack('add');
+		        }
+
 	    });
 	    
     </script>
 </head>
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
- 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post" nctype="multipart/form-data">
+ 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post" enctype="multipart/form-data">
  		<table class="add">
 		    <tr>
 		       <th>사용내역*</th>
@@ -55,9 +66,9 @@
 		   </tr>
 		    <tr>
 		       	<th>영수증*</th>
-		    	<td><input name="imageFile" type="file"></td>
+		    	<td><input multiple="multiple" type="file" id="uploadFile" name="uploadFile"/></td>
 		  </tr>
-		
+	
 		</table>
 		  <input name="registrationDate" type="date" style="display: none" id="currentDate">
 		    <script>

@@ -55,7 +55,7 @@ public class SampleVO extends SampleDefaultVO {
 	private String usePrice;
 	
 	//사용일
-	private Date useDate;
+	private String useDate;
 	
 	//승인금액
 	private String approvePrice;
@@ -67,7 +67,7 @@ public class SampleVO extends SampleDefaultVO {
 	private String stateNm;
 	
 	//처리일시
-	private Date stateDate;
+	private String stateDate;
 	
 	//비고
 	private String etc;
@@ -98,6 +98,30 @@ public class SampleVO extends SampleDefaultVO {
 		this.no = no;
 	}
 
+	public Integer getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(Integer billNo) {
+		this.billNo = billNo;
+	}
+
+	public String getUseDtlCd() {
+		return useDtlCd;
+	}
+
+	public void setUseDtlCd(String useDtlCd) {
+		this.useDtlCd = useDtlCd;
+	}
+
+	public String getUseDtlNm() {
+		return useDtlNm;
+	}
+
+	public void setUseDtlNm(String useDtlNm) {
+		this.useDtlNm = useDtlNm;
+	}
+
 	public String getUsePrice() {
 		return usePrice;
 	}
@@ -106,11 +130,11 @@ public class SampleVO extends SampleDefaultVO {
 		this.usePrice = usePrice;
 	}
 
-	public Date getUseDate() {
+	public String getUseDate() {
 		return useDate;
 	}
 
-	public void setUseDate(Date useDate) {
+	public void setUseDate(String useDate) {
 		this.useDate = useDate;
 	}
 
@@ -122,11 +146,27 @@ public class SampleVO extends SampleDefaultVO {
 		this.approvePrice = approvePrice;
 	}
 
-	public Date getStateDate() {
+	public String getStateCd() {
+		return stateCd;
+	}
+
+	public void setStateCd(String stateCd) {
+		this.stateCd = stateCd;
+	}
+
+	public String getStateNm() {
+		return stateNm;
+	}
+
+	public void setStateNm(String stateNm) {
+		this.stateNm = stateNm;
+	}
+
+	public String getStateDate() {
 		return stateDate;
 	}
 
-	public void setStateDate(Date stateDate) {
+	public void setStateDate(String stateDate) {
 		this.stateDate = stateDate;
 	}
 
@@ -136,6 +176,14 @@ public class SampleVO extends SampleDefaultVO {
 
 	public void setEtc(String etc) {
 		this.etc = etc;
+	}
+
+	public String getFileNm() {
+		return fileNm;
+	}
+
+	public void setFileNm(String fileNm) {
+		this.fileNm = fileNm;
 	}
 
 	public String getFilePath() {
@@ -178,58 +226,18 @@ public class SampleVO extends SampleDefaultVO {
 		this.searchStateCode = searchStateCode;
 	}
 
-	public Integer getBillNo() {
-		return billNo;
-	}
-
-	public void setBillNo(Integer billNo) {
-		this.billNo = billNo;
-	}
-
-	public String getUseDtlCd() {
-		return useDtlCd;
-	}
-
-	public void setUseDtlCd(String useDtlCd) {
-		this.useDtlCd = useDtlCd;
-	}
-
-	public String getUseDtlNm() {
-		return useDtlNm;
-	}
-
-	public void setUseDtlNm(String useDtlNm) {
-		this.useDtlNm = useDtlNm;
-	}
-
-	public String getStateCd() {
-		return stateCd;
-	}
-
-	public void setStateCd(String stateCd) {
-		this.stateCd = stateCd;
-	}
-
-	public String getStateNm() {
-		return stateNm;
-	}
-
-	public void setStateNm(String stateNm) {
-		this.stateNm = stateNm;
-	}
-
-	public String getFileNm() {
-		return fileNm;
-	}
-
-	public void setFileNm(String fileNm) {
-		this.fileNm = fileNm;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "SampleVO [no=" + no + ", billNo=" + billNo + ", useDtlCd=" + useDtlCd + ", useDtlNm=" + useDtlNm
+				+ ", usePrice=" + usePrice + ", useDate=" + useDate + ", approvePrice=" + approvePrice + ", stateCd="
+				+ stateCd + ", stateNm=" + stateNm + ", stateDate=" + stateDate + ", etc=" + etc + ", fileNm=" + fileNm
+				+ ", filePath=" + filePath + ", uploadFile=" + uploadFile + ", searchYm=" + searchYm
+				+ ", searchDetailCode=" + searchDetailCode + ", searchStateCode=" + searchStateCode + "]";
+	}
+
 
 }

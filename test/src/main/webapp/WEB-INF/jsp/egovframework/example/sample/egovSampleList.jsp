@@ -28,6 +28,17 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javaScript" language="javascript" defer="defer">
         var popup;   
+        
+        function fn_popCallBack(gubun) {
+    		if (gubun == 'add' || gubun == 'del') {
+    			popup.close();
+    			fn_selectList();
+    		} else if (gubun == 'mod') {
+    			fn_selectList();
+    		}
+    		
+    	}
+        
         /* 검색버튼 이벤트 함수 */
         function fn_selectList() {
         	/* document.listForm.action = "<c:url value='/egovSampleList.do'/>";
@@ -43,12 +54,31 @@
         
         // 글 수정 및 삭제 팝업화면
         function fn_detailView(billNo) {
-        	popup = window.open("/billDetailView.do?billNo=" + billNo,"PopupDtl","width=550, height=470");
+        	popup = window.open("/billDetailView.do?billNo=" + billNo,"PopupDtl", "width=750, height=380");
         }
+        
+        //엑셀다운
+        function fn_excelDown() {
+        	
+        	console.log("ddd")
+    		var excelForm = document.excelForm;
+    		excelForm.searchYm = $("#searchYm").val();
+    		excelForm.searchDtlCd = $("#searchDtlCd").val();
+    		excelForm.searchStatusCd = $("#searchStatusCd").val();
+    		excelForm.action = 'billExcelDown.do';
+    		excelForm.submit();
+	    }
+    
     </script>
 </head>
 
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
+
+	<form name="excelForm" id="excelForm">
+		<input type="hidden" name="searchYm"/>
+		<input type="hidden" name="searchDtlCd"/>
+		<input type="hidden" name="searchStatusCd"/>
+	</form>
     <form:form commandName="searchVO" id="listForm" name="listForm" method="post">
         <input type="hidden" name="selectedId" />
         <div id="content_pop">
@@ -61,22 +91,22 @@
         	<!-- // 타이틀 -->
         	<div id="search">
 	        	<ul>
+	        		<li>
+        	            <span class="btn_blue_l">
+        	                <a href="#">초기화</a>
+        	                <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+        	            </span>
+        	        </li>
                 	<li>
         	            <span class="btn_blue_l">
         	                <a href="javascript:fn_selectList();">검색</a>
         	                <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
         	            </span>
         	        </li>
-	               </ul>
-                	<li>
-        	            <span class="btn_blue_l">
-        	                <a href="#">초기화</a>
-        	                <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
-        	            </span>
-        	        </li>
-	               </ul>
+	             </ul>                	
                     <li><label for="searchYm">등록연월</label>
-                    	<input type="text" name="searchYm" id="searchYm" maxlength="6" value="${searchYm}"/>                    	
+                    	<%-- <input type="text" name="searchYm" id="searchYm" maxlength="6" value="${searchYm}"/>   --%>    
+                    	<input name="searchYm" type="date"id="currentDate" value="${searchYm}" >          	
                     </li>
                     <li><label for="searchDetailCode">사용내역</label>
                     	<select name="searchDetailCode" id="searchDetailCode">
@@ -104,7 +134,7 @@
 	        	<ul>
 	        	      <li>
 	        	          <span class="btn_blue_l">
-	        	              <a href="#">엑셀다운로드</a>
+	        	              <a href="javascript:fn_excelDown()">엑셀다운로드</a>
 	                          <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
 	                      </span>
 	                  </li>

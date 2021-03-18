@@ -14,6 +14,9 @@
     <script type="text/javaScript" language="javascript" defer="defer">
 	    /* 글 등록 function */
 	    function fn_save() {
+	    	
+	    	console.log(">>>" + $("#useDetailCode").val())
+	    	
 	    	$("#listForm").prop('action', 'billAdd.do');
 	        $("#listForm").prop('method', 'post');
 	        $("#listForm").submit();
@@ -27,18 +30,18 @@
     </script>
 </head>
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
- 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post" nctype="multipart/form-data">
+ 	<form:form commandName="searchVO" id="listForm" name="listForm" method="post" enctype="multipart/form-data">
  		<table class="add">
 		    <tr>
 		       <th>사용내역*</th>
-		       <td><select>
+		       <td><select id="useDtlCd" name="useDtlCd">
 				    <option value="" selected> 선택</option>
-				    <option value="식대(야근)">식대(야근)</option>
-				    <option value="택시비(야근)">택시비(야근)</option>
-				    <option value="택시비(회식)">택시비(회식)</option>
-				    <option value="사무용품구매">사무용품구매</option>
-				    <option value="교육비">교육비</option>
-				    <option value="접대비">접대비</option>
+				    <option value="01">식대(야근)</option>
+				    <option value="02">택시비(야근)</option>
+				    <option value="03">택시비(회식)</option>
+				    <option value="04">사무용품구매</option>
+				    <option value="05">교육비</option>
+				    <option value="06">접대비</option>
 				    </select>
 				</td> 
 		    </tr>
@@ -64,10 +67,10 @@
                 <a href="javascript:fn_close();">닫기</a>
                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
             </span>
-        	  <span class="btn_blue_l">
-                  <a href="javascript:fn_save();">저장</a>
-                  <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
-              </span>
+       	  	<span class="btn_blue_l">
+                 <a href="javascript:fn_save();">저장</a>
+                 <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+            </span>
 		</div>
  	</form:form>
  	

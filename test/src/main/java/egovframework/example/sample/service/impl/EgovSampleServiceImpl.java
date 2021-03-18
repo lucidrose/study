@@ -15,6 +15,7 @@
  */
 package egovframework.example.sample.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import egovframework.example.sample.service.EgovSampleService;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Class Name : EgovSampleServiceImpl.java
@@ -73,13 +75,27 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public void insertSample(SampleVO vo) throws Exception {
 		LOGGER.debug(vo.toString());
-
-		/** ID Generation Service */
-	//	String id = egovIdGnrService.getNextStringId();
-		//vo.setId(id);
-	//	LOGGER.debug(vo.toString());
-
 		
+		// 파일 첨부
+		MultipartFile mf = vo.getUploadFile();
+		
+		// 파일이 존재한다면
+		if(mf != null) {
+			// 업로드한 파일 이름, 저장할 위치
+			String fileNm = mf.getOriginalFilename();
+			String filePath = "C:\\\\eGovFrame-3.9.0\\\\workspace.edu\\\\test\\\\src\\\\main\\\\webapp\\\\images\\\\egovframework\\\\example\\";
+			
+			// update에 필요한 정보 세팅
+			vo.setFileNm(fileNm);
+			vo.setFilePath(filePath);
+			
+			try {
+				// 파일 생성 "C:\\img\\" 밑에 실제 경로 "bill\\" + 파일 이름
+				mf.transferTo(new File(filePath + fileNm));
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}		
 		sampleDAO.insertSample(vo);
 	}
 
@@ -96,6 +112,28 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public void updateSample(SampleVO vo) throws Exception {
+		
+		MultipartFile mf = vo.getUploadFile();
+		
+		// 파일이 존재한다면
+		if(mf != null) {
+			//업로드한 파일 이름, 저장할 위치
+			String fileNm = mf.getOriginalFilename();
+			String filePath = "C:\\\\eGovFrame-3.9.0\\\\workspace.edu\\\\test\\\\src\\\\main\\\\webapp\\\\images\\\\egovframework\\\\example\\";
+			
+			// update에 필요한 정보 세팅
+			vo.setFileNm(fileNm);		
+			vo.setFilePath(filePath);
+			try {
+				// 파일생성 "C:\\img\\" 밑에 실제 경로 "bill\\" + 파일이름
+				mf.transferTo(new File(filePath + fileNm));
+			} catch (Exception e) {
+				// try문에서 에러발생 시 오류 출력
+				e.printStackTrace();
+			}
+		}
+		
+		
 		sampleDAO.updateDetail(vo);
 	}
 
