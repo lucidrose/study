@@ -7,31 +7,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>사원 조회</title>
+	<meta charset="UTF-8">
+	<title>사원 조회</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javaScript" language="javascript" defer="defer">
+		
+		//처음 시작할 때 
+		$(document).ready(function() {        	
+			$("#no").val("${sampleVO.memberNo}");
+		});
+		
+		function fn_save() {
+			var url = 'addMember.do';
+			
+			$("#listForm").prop('action', url);
+	        $("#listForm").prop('method', 'post');
+	        $("#listForm").submit();
+		}
+		
+		function fn_cancel() {
+			location.href = "<c:url value='/HRList.do'/>" 
+		}
+	</script>
 </head>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javaScript" language="javascript" defer="defer">
-	
-	//처음 시작할 때 
-	$(document).ready(function() {        	
-		$("#no").val("${sampleVO.memberNo}");
-	});
-	
-	function fn_save() {
-		var url = 'addMember.do';
-		/* if('${sampleVO.memberNo}') {
-			/* url = */ 
-		} */
-		$("#listForm").prop('action', url);
-        $("#listForm").prop('method', 'post');
-        $("#listForm").submit();
-	}
-	
-	function fn_cancel() {
-		location.href = "<c:url value='/HRList.do'/>" 
-	}
-</script>
 <style type="text/css">
 
   #wrapper{
@@ -59,8 +57,9 @@
  } 
 </style>
 <body>
+
 <div class="left"> <jsp:include page="left.jsp"></jsp:include></div>
-<form:form commandName="sampleVO" id="listForm" name="listForm" method="post" enctype="multipart/form-data">
+<form:form commandName="sampleVO" id="listForm" name="listForm" method="post" >
 	<input type="text" id="no" name="no" value="${sampleVO.memberNo}"/>
 	<table width="50%" border="0" cellspacing="0" cellpadding="0">
 	  <tr> 

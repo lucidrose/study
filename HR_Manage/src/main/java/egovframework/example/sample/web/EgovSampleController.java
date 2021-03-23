@@ -116,15 +116,6 @@ public class EgovSampleController {
 		return "sample/memberInfo";
 	}
 	
-	/*@RequestMapping(value = "/mainView.do", method = RequestMethod.GET)
-	public String mainView(@RequestParam("selectedId") String id, @ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
-		SampleVO sampleVO = new SampleVO();
-		sampleVO.setViewId(id);
-		// 변수명은 CoC 에 따라 sampleVO
-		System.out.println(id);
-		model.addAttribute(selectSample(sampleVO, searchVO));
-		return "sample/main";
-	}*/
 	/**
 	 * 글을 등록한다.
 	 * @param sampleVO - 등록할 정보가 담긴 VO
