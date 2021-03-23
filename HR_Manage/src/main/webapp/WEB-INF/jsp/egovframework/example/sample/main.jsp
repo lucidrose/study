@@ -3,46 +3,26 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%
-  /**
-  * @Class Name : egovSampleList.jsp
-  * @Description : Sample List 화면
-  * @Modification Information
-  *
-  *   수정일         수정자                   수정내용
-  *  -------    --------    ---------------------------
-  *  2009.02.01            최초 생성
-  *
-  * author 실행환경 개발팀
-  * since 2009.02.01
-  *
-  * Copyright (C) 2009 by MOPAS  All right reserved.
-  */
-%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>인사 관리 시스템</title>
     <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/style.css'/>"/>
+    <validator:javascript formName="sampleVO" staticJavascript="false" xhtml="true" cdata="false"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javaScript" language="javascript" defer="defer">
+    	function fn_select(id) {
+    		alert(id);
+    		document.listForm.selectedId.value = id;
+    		document.listForm.action = "<c:url value='/updateMemberView.do'/>";
+    		document.listForm.submit();
+    	}
     </script>
 </head>
 <style type="text/css">
- /* .left {
-    position: absolute;
-    top: 100px;
-    left: 80px;
-}
-.main {
-float:left;
-padding: 50px;
-    margin: 10auto;
-   text-align: right;
-   padding: 0px;
-  
- } */
-  #wrapper{
+   #wrapper{
  border:0px;
  width:1054px;
  padding:22px;
@@ -68,7 +48,7 @@ padding: 50px;
 </style>
 <body>
 <div class="left"> <jsp:include page="left.jsp"></jsp:include></div>
-
+<form id="listForm" name="listForm" method="post">
 <table width="50%" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr> 
     <td>&nbsp;</td>
@@ -161,6 +141,6 @@ padding: 50px;
   </tr>
 </tbody></table>
 
-
+</form>
 </body>
 </html>

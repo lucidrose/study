@@ -134,20 +134,12 @@ public class EgovSampleController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = "/addMember.do", method = RequestMethod.POST)
-	public String addSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO, BindingResult bindingResult, Model model, SessionStatus status)
+	public String addSample(@ModelAttribute("sampleVO") SampleVO sampleVO, Model model, SessionStatus status)
 			throws Exception {
 
-		// Server-Side Validation
-		/*beanValidator.validate(sampleVO, bindingResult);
-
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
-		}*/
-
 		sampleService.insertSample(sampleVO);
-		/*status.setComplete();*/
-		return "/HRList.do";
+		status.setComplete();
+		return "forward:/HRList.do";
 	}
 
 	/**
@@ -158,13 +150,13 @@ public class EgovSampleController {
 	 * @return "egovSampleRegister"
 	 * @exception Exception
 	 */
-	@RequestMapping("/updateSampleView.do")
+	@RequestMapping("/updateMemberView.do")
 	public String updateSampleView(@RequestParam("selectedId") String id, @ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
 		SampleVO sampleVO = new SampleVO();
-		//sampleVO.setId(id);
+		sampleVO.setMemberNo(Integer.parseInt(id));
 		// 변수명은 CoC 에 따라 sampleVO
 		model.addAttribute(selectSample(sampleVO, searchVO));
-		return "sample/egovSampleRegister";
+		return "sample/memberInfo";
 	}
 
 	/**

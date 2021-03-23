@@ -112,9 +112,9 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 */
 	@Override
 	public SampleVO selectSample(SampleVO vo) throws Exception {
-		SampleVO resultVO = sampleDAO.selectSample(vo);
-		if (resultVO == null)
-			throw processException("info.nodata.msg");
+		SampleVO resultVO = sampleDAO.selectMember(vo);
+		/*if (resultVO == null)
+			throw processException("info.nodata.msg");*/
 		return resultVO;
 	}
 

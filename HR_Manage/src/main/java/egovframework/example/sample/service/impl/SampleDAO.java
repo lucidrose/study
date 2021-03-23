@@ -81,7 +81,7 @@ public class SampleDAO extends EgovAbstractDAO {
 	 * @exception Exception
 	 */
 	public SampleVO selectSample(SampleVO vo) throws Exception {
-		return (SampleVO) select("sampleDAO.selectSample", vo);
+		return (SampleVO) select("sampleDAO.selectMember", vo);
 	}
 
 	/**

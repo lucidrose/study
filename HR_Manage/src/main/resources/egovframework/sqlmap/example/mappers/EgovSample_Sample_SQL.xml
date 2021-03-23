@@ -91,12 +91,39 @@
 
 	</delete>
 
-	<select id="selectSample" resultMap="sample">
+	<select id="selectMember" resultMap="sample">
 
 			SELECT
-				ID, NAME, DESCRIPTION, USE_YN, REG_USER
-			FROM SAMPLE
-			WHERE ID=#{id}
+				MEMBER_NO
+				  , MEMBER_KNM
+				  , MEMBER_ENM
+				  , MEMBER_JNM
+				  , RRN1
+				  , RRN2
+				  , FILE_NM
+				  , FILE_PATH
+				  , B_YEAR
+				  , B_MONTH
+				  , B_DAY
+				  , CALENDAR
+				  , GENDER
+				  , WEDDING
+				  , CAREER
+				  , MONEY_TYPE
+				  , WORKING_TYPE
+				  , JOIN_TYPE
+				  , POST_CD
+				  , ADDRESS
+				  , PHONE_NO1
+				  , PHONE_NO2
+				  , PHONE_NO3
+				  , EMAIL
+				  , STAT
+				  , ALCHOL
+				  , LIST_STAT
+				  , WORK_YDN
+			FROM TB_HR
+			WHERE MEMBER_NO=#{memberNo, jdbcType=INTEGER}}
 
 	</select>
 

@@ -19,9 +19,11 @@
 	});
 	
 	function fn_save() {
-		/* var url = "<c:url value='/addMember.do'/>"; */
-		
-		$("#listForm").prop('action', 'addMember.do');
+		var url = 'addMember.do';
+		/* if('${sampleVO.memberNo}') {
+			/* url = */ 
+		} */
+		$("#listForm").prop('action', url);
         $("#listForm").prop('method', 'post');
         $("#listForm").submit();
 	}
@@ -31,19 +33,7 @@
 	}
 </script>
 <style type="text/css">
- /* .left {
-    position: absolute;
-    top: 100px;
-    left: 80px;
-}
-.main {
-float:left;
-padding: 50px;
-    margin: 10auto;
-   text-align: right;
-   padding: 0px;
-  
- } */
+
   #wrapper{
  border:0px;
  width:1054px;
@@ -70,7 +60,7 @@ padding: 50px;
 </style>
 <body>
 <div class="left"> <jsp:include page="left.jsp"></jsp:include></div>
-<form:form commandName="sampleVO" id="listForm" name="listForm" method="post">
+<form:form commandName="sampleVO" id="listForm" name="listForm" method="post" enctype="multipart/form-data">
 	<input type="text" id="no" name="no" value="${sampleVO.memberNo}"/>
 	<table width="50%" border="0" cellspacing="0" cellpadding="0">
 	  <tr> 
@@ -138,23 +128,23 @@ padding: 50px;
 	                            <tr>
 	                              <td width="107" height="26" align="right"><strong>한글이름 :</strong>&nbsp;</td>
 	                              <td width="310" height="26">
-	                                <input type="text" id="memberKnm" name="memberKnm">
+	                                <form:input type="text" path="memberKnm" name="memberKnm" />
 	                              </td>
 	                            </tr>
 	                            <tr>
 	                              <td height="26" align="right"><strong>영문이름 :&nbsp;</strong></td>
-	                              <td height="26"><input type="text" id="memberEnm" name="memberEnm"></td>
+	                              <td height="26"> <form:input type="text" path="memberEnm" name="memberEnm" /></td>
 	                            </tr>
 	                            <tr>
 	                              <td height="26" align="right"><strong>한문이름 :</strong>&nbsp;</td>
-	                              <td height="26"><input type="text" id="memberJnm" name="memberJnm"></td>
+	                              <td height="26"><form:input type="text" path="memberJnm" name="memberJnm" /></td>
 	                            </tr>
 	                            <tr>
 	                              <td height="26" align="right">
 	                              	<strong>주민등록번호 :</strong>&nbsp;
 	                              </td>
 	                              <td height="26">
-	                              	<input id="rrn1" name="rrn1" type="text" size="15"> - <input id = "rrn2" name="rrn2" type="text" size="15">
+	                              	<form:input path="rrn1" name="rrn1" type="text" size="15" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" />
 	                              </td>
 	                            </tr>
 	                          </table></td>
@@ -181,7 +171,7 @@ padding: 50px;
 		                            <td width="102" align="right">
 		                            	<strong>사진파일명 :&nbsp;</strong>
 		                            </td>
-		                            <td width="268"><input id="fileNm" name="fileNm" type="text" size="40"></td>
+		                            <td width="268"><%-- <form:input path="fileNm" name="fileNm" type="text" size="40" /> --%></td>
 		                            <td width="146">
 		                            	<font color="#FF0000">
 		                            		<img src="images/egovframework/example/bt_search.gif" width="49" height="18">
@@ -196,11 +186,11 @@ padding: 50px;
 	                      	<table width="500" border="0" cellspacing="1" cellpadding="1">
 	                          <tr> 
 	                            <td width="102" align="right"><strong>생년월일 :&nbsp;</strong></td>
-	                            <td width="391"><input id="bYear" name="bYear" type="text" size="10"> 년 
-	                              <input id="bMonth" name="bMonth" type="text" size="7"> 월 
-	                              <input id="bDay" name="bDay" type="text" size="7"> 일 ( 
-	                              <input type="radio" id="calendar" name="calendar" value="양력" <c:if test="${sampleVO.calendar eq '1' }">checked="checked"</c:if>/> 양력 
-	                              <input type="radio" id="calendar" name="calendar" value="음력" <c:if test="${sampleVO.calendar eq '2' }">checked="checked"</c:if>/> 음력
+	                            <td width="391"><form:input path="bYear" name="bYear" type="text" size="10" /> 년 
+	                              <form:input path="bMonth" name="bMonth" type="text" size="7" /> 월 
+	                              <form:input path="bDay" name="bDay" type="text" size="7" /> 일 ( 
+	                              <input type="radio" path="calendar" name="calendar" value="양력" <c:if test="${sampleVO.calendar eq '1' }">checked="checked"</c:if>/> 양력 
+	                              <input type="radio" path="calendar" name="calendar" value="음력" <c:if test="${sampleVO.calendar eq '2' }">checked="checked"</c:if>/> 음력
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -211,8 +201,8 @@ padding: 50px;
 	                          <tr> 
 	                            <td width="102" align="right"><strong>성별 :&nbsp; </strong></td>
 	                            <td width="391"> 
-	                            	<input type="radio" id="gender" name="gender" value="남자" <c:if test="${sampleVO.gender eq '1' }">checked="checked"</c:if>/> 남자 
-	                              	<input type="radio" id="gender" name="gender" value="여자" <c:if test="${sampleVO.gender eq '2' }">checked="checked"</c:if>/> 여자 
+	                            	<input type="radio" path="gender" name="gender" value="남자" <c:if test="${sampleVO.gender eq '1' }">checked="checked"</c:if>/> 남자 
+	                              	<input type="radio" path="gender" name="gender" value="여자" <c:if test="${sampleVO.gender eq '2' }">checked="checked"</c:if>/> 여자 
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -223,8 +213,8 @@ padding: 50px;
 	                          <tr> 
 	                            <td width="102" align="right"><strong>결혼유무 :&nbsp;</strong></td>
 	                            <td width="391"> 
-	                            	<input type="radio" id="wedding" name="wedding" value="기혼" <c:if test="${sampleVO.wedding eq '1' }">checked="checked"</c:if>/> 기혼
-	                              <input type="radio" id="wedding" name="wedding" value="미혼" <c:if test="${sampleVO.wedding eq '2' }">checked="checked"</c:if>/> 미혼
+	                            	<input type="radio" path="wedding" name="wedding" value="기혼" <c:if test="${sampleVO.wedding eq '1' }">checked="checked"</c:if>/> 기혼
+	                              	<input type="radio" path="wedding" name="wedding" value="미혼" <c:if test="${sampleVO.wedding eq '2' }">checked="checked"</c:if>/> 미혼
 	                             </td>
 	                          </tr>
 	                        </table></td>
@@ -234,7 +224,7 @@ padding: 50px;
 	                          <tr> 
 	                            <td width="101" align="right"><strong>년차 :&nbsp;</strong></td>
 	                            <td width="392">
-	                            	<input id="career" name="career" type="text" size="10"> 
+	                            	<form:input path="career" name="career" type="text" size="10" /> 
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -295,8 +285,8 @@ padding: 50px;
 	                            <td width="101" align="right">
 	                            	<strong>주소 :&nbsp;</strong>
 	                            </td>
-	                            <td width="392"><input id="postCd" name="postCd" type="text" size="10"> 
-	                              <input id="address" name="address" type="text" size="40"> 
+	                            <td width="392"><form:input path="postCd" name="postCd" type="text" size="10" /> 
+	                              <form:input path="address" name="address" type="text" size="40" /> 
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -309,11 +299,9 @@ padding: 50px;
 	                            	<strong>연락처 :&nbsp;</strong>
 	                            </td>
 	                            <td width="392">
-	                            	<input id="phoneNo1" name="phoneNo1" type="text" size="10">
-	                              - 
-	                              	<input id="phoneNo2" name="phoneNo2" type="text" size="10">
-	                              - 
-	                              	<input id="phoneNo3" name="phoneNo3" type="text" size="10">
+	                            	<form:input path="phoneNo1" name="phoneNo1" type="text" size="10" /> - 
+	                              	<form:input path="phoneNo2" name="phoneNo2" type="text" size="10" /> - 
+	                              	<form:input path="phoneNo3" name="phoneNo3" type="text" size="10" />
 	                             </td>
 	                          </tr>
 	                        </table>
@@ -326,7 +314,7 @@ padding: 50px;
 	                            	<strong>이메일 :&nbsp;</strong>
 	                            </td>
 	                            <td width="392">
-	                            	<input id="email" name="email" type="text" size="20"> 
+	                            	<form:input path="email" name="email" type="text" size="20" /> 
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -340,7 +328,7 @@ padding: 50px;
 	                            	<strong>기술등급 :&nbsp;</strong>
 	                            </td>
 	                            <td width="392">
-	                            	<input id="stat" name="stat" type="text" size="20"> 
+	                            	<form:input path="stat" name="stat" type="text" size="20" /> 
 	                            </td>
 	                          </tr>
 	                        </table>
@@ -354,7 +342,7 @@ padding: 50px;
 	                            	<strong>주량 :&nbsp;</strong>
 	                            </td>
 	                            <td width="392">
-	                            	<input id="alchol" name="alchol" type="text" size="20"> 
+	                            	<form:input path="alchol" name="alchol" type="text" size="20" /> 
 	                            </td>
 	                          </tr>
 	                        </table>
