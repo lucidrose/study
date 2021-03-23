@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.sample.service.impl.SampleMapper">
+
+	<resultMap id="sample" type="egovframework.example.sample.service.SampleVO">
+		<!-- <result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="useYn" column="use_yn"/>
+		<result property="regUser" column="reg_user"/> -->
+	</resultMap>
+
+	<insert id="insertMember" parameterType="SampleVO">
+
+			INSERT INTO TB_HR
+				( 	MEMBER_NO
+				  , MEMBER_KNM
+				  , MEMBER_ENM
+				  , MEMBER_JNM
+				  , RRN1
+				  , RRN2
+				  , FILE_NM
+				  , FILE_PATH
+				  , B_YEAR
+				  , B_MONTH
+				  , B_DAY
+				  , CALENDAR
+				  , GENDER
+				  , WEDDING
+				  , CAREER
+				  , MONEY_TYPE
+				  , WORKING_TYPE
+				  , JOIN_TYPE
+				  , POST_CD
+				  , ADDRESS
+				  , PHONE_NO1
+				  , PHONE_NO2
+				  , PHONE_NO3
+				  , EMAIL
+				  , STAT
+				  , ALCHOL
+				  , LIST_STAT
+				  , WORK_YDN
+				   )
+			VALUES ( (SELECT MAX(MEMBER_NO) + 1 FROM TB_HR)
+				  , #{memberKnm, jdbcType=VARCHAR}
+				  , #{memberEnm, jdbcType=VARCHAR}
+				  , #{memberJnm, jdbcType=VARCHAR}
+				  , #{rrn1, jdbcType=VARCHAR}
+				  , #{rrn2, jdbcType=VARCHAR}
+				  , #{fileNm, jdbcType=VARCHAR}
+				  , #{filePath, jdbcType=VARCHAR}
+				  , #{bYear, jdbcType=VARCHAR}
+				  , #{bMonth, jdbcType=VARCHAR}
+				  , #{bDay, jdbcType=VARCHAR}
+				  , #{calendar, jdbcType=VARCHAR}
+				  , #{gender, jdbcType=VARCHAR}
+				  , #{wedding, jdbcType=VARCHAR}
+				  , #{career, jdbcType=VARCHAR}
+				  , #{moneyType, jdbcType=VARCHAR}
+				  , #{workingType, jdbcType=VARCHAR}
+				  , #{joinType, jdbcType=VARCHAR}
+				  , #{postCd, jdbcType=VARCHAR}
+				  , #{address, jdbcType=VARCHAR}
+				  , #{phoneNo1, jdbcType=VARCHAR}
+				  , #{phoneNo2, jdbcType=VARCHAR}
+				  , #{phoneNo3, jdbcType=VARCHAR}
+				  , #{email, jdbcType=VARCHAR}
+				  , #{stat, jdbcType=VARCHAR}
+				  , #{alchol, jdbcType=VARCHAR}
+				  , #{listStat, jdbcType=VARCHAR}
+				  , #{workYdn, jdbcType=VARCHAR} )
+
+	</insert>
+
+	<update id="updateSample">
+
+			UPDATE SAMPLE
+			SET ID=#{id}
+				, NAME=#{name}
+				, DESCRIPTION=#{description}
+				, USE_YN=#{useYn}
+				  WHERE ID=#{id}
+
+	</update>
+
+	<delete id="deleteSample">
+
+			DELETE FROM SAMPLE
+			WHERE ID=#{id}
+
+	</delete>
+
+	<select id="selectSample" resultMap="sample">
+
+			SELECT
+				ID, NAME, DESCRIPTION, USE_YN, REG_USER
+			FROM SAMPLE
+			WHERE ID=#{id}
+
+	</select>
+
+	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
+
+			SELECT
+					MEMBER_NO
+				  , MEMBER_KNM
+				  , RRN1
+				  , RRN2
+				  , CASE WHEN GENDER = 1 THEN '남자' ELSE '여자'	END AS GENDER
+				  , STAT
+				  , LIST_STAT
+				  , CASE WHEN WORK_YDN = 'Y' THEN '근무'
+				  		 WHEN WORK_YDN = 'D' THEN '대기'
+				  		 ELSE '퇴사' 
+				    END AS WORK_YDN
+			FROM TB_HR
+			<!-- WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			ORDER BY ID ASC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex} -->
+	</select>
+
+	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM TB_HR
+			WHERE 1=1
+			<!-- <if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if> -->
+	</select>
+
+</mapper>
