@@ -16,12 +16,14 @@
 package egovframework.example.sample.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 
 import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -80,8 +82,27 @@ public class SampleDAO extends EgovAbstractDAO {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-	public SampleVO selectSample(SampleVO vo) throws Exception {
-		return (SampleVO) select("sampleDAO.selectMember", vo);
+	public SampleVO selectSample(SampleVO vo, String viewId) throws Exception {
+		
+		if(viewId.equals("member")) {
+			return (SampleVO) select("sampleDAO.selectMember", vo);
+		}else if(viewId.equals("grad")) {
+			return (SampleVO) select("sampleDAO.selectGrad", vo);
+		}else if(viewId.equals("edu")) {
+			return (SampleVO) select("sampleDAO.selectEdu", vo);
+		}else if(viewId.equals("license")) {
+			return (SampleVO) select("sampleDAO.selectLicense", vo);
+		}else if(viewId.equals("tech")) {
+			return (SampleVO) select("sampleDAO.selectTech", vo);
+		}else if(viewId.equals("proejct")) {
+			return (SampleVO) select("sampleDAO.selectProject", vo);
+		}else if(viewId.equals("career")) {
+			return (SampleVO) select("sampleDAO.selectCareer", vo);
+		}else if(viewId.equals("work")) {
+			return (SampleVO) select("sampleDAO.selectWork", vo);
+		}		
+		return null;
+		/*return (SampleVO) select("sampleDAO.selectMember", vo);*/
 	}
 
 	/**
@@ -93,6 +114,7 @@ public class SampleDAO extends EgovAbstractDAO {
 	public List<?> selectSampleList(SampleDefaultVO searchVO) throws Exception {
 		return list("sampleDAO.selectSampleList", searchVO);
 	}
+	
 
 	/**
 	 * 글 총 갯수를 조회한다.

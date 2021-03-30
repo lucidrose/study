@@ -23,8 +23,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><spring:message code="title.sample" /></title>
+    <title>인사 관리 시스템</title>
     <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/sample.css'/>"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javaScript" language="javascript" defer="defer">
         <!--
         /* 글 수정 화면 function */
@@ -54,17 +55,24 @@
         }
         
         //-->
+        
+        /* 글 등록 화면 function */
+        function fn_egov_addView() {
+           	document.listForm.action = "<c:url value='/add.do'/>";
+           	document.listForm.submit();
+        }
     </script>
 </head>
 
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
+<%-- <div><jsp:include page="left.jsp"></jsp:include></div> --%>
     <form:form commandName="searchVO" id="listForm" name="listForm" method="post">
         <input type="hidden" name="selectedId" />
         <div id="content_pop">
         	<!-- 타이틀 -->
         	<div id="title">
         		<ul>
-        			<li><img src="<c:url value='/images/egovframework/example/title_dot.gif'/>" alt=""/><spring:message code="list.sample" /></li>
+        			<li><img src="<c:url value='/images/egovframework/example/title_dot.gif'/>" alt=""/>사원 조회</li>
         		</ul>
         	</div>
         	<!-- // 타이틀 -->

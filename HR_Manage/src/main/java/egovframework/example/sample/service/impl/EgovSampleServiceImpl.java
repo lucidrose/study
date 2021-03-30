@@ -15,6 +15,7 @@
  */
 package egovframework.example.sample.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import egovframework.example.sample.service.EgovSampleService;
@@ -26,6 +27,7 @@ import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -111,10 +113,40 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 * @exception Exception
 	 */
 	@Override
-	public SampleVO selectSample(SampleVO vo) throws Exception {
-		SampleVO resultVO = sampleDAO.selectMember(vo);
-		/*if (resultVO == null)
+	public SampleVO selectSample(SampleVO vo, String viewId) throws Exception {
+		
+		SampleVO resultVO = null;
+		
+		if(viewId.equals("member")) {
+			resultVO = sampleDAO.selectMember(vo);
+			return resultVO;
+		}/*else if(viewId.equals("grad")) {
+			resultVO = sampleDAO.selectGrad(vo);
+			return resultVO;
+		}else if(viewId.equals("edu")) {
+			//resultVO = sampleDAO.selectEdu(vo);
+			return resultVO;
+		}else if(viewId.equals("license")) {
+			resultVO = sampleDAO.selectLicense(vo);
+			return resultVO;
+		}else if(viewId.equals("tech")) {
+			resultVO = sampleDAO.selectTech(vo);
+			return resultVO;
+		}*/else if(viewId.equals("project")) {
+			resultVO = sampleDAO.selectProject(vo);
+			return resultVO;
+		}/*else if(viewId.equals("career")) {
+			resultVO = sampleDAO.selectCareer(vo);
+			return resultVO;
+		}*/else if(viewId.equals("work")) {
+			resultVO = sampleDAO.selectWork(vo);
+			return resultVO;
+		}
+		
+		/*SampleVO resultVO = sampleDAO.selectMember(vo);
+		if (resultVO == null)
 			throw processException("info.nodata.msg");*/
+		/*return resultVO;*/
 		return resultVO;
 	}
 
@@ -128,6 +160,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	public List<?> selectSampleList(SampleDefaultVO searchVO) throws Exception {
 		return sampleDAO.selectSampleList(searchVO);
 	}
+	
+
 
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -138,6 +172,36 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	@Override
 	public int selectSampleListTotCnt(SampleDefaultVO searchVO) {
 		return sampleDAO.selectSampleListTotCnt(searchVO);
+	}
+	// 교육정보 list 
+	@Override
+	public List<?> selectEduList(SampleVO sampleVO) throws Exception {
+	
+		return sampleDAO.selectEdu(sampleVO);
+	}
+	// 교육정보 학력 map  
+	@Override
+	public SampleVO selectVgrad(SampleVO sampleVO) throws Exception {
+		return sampleDAO.selectVgrad(sampleVO);
+	}
+	// 자격증
+	@Override
+	public List<?> selectLicenseList(SampleVO sampleVO) throws Exception {
+	
+		return sampleDAO.selectLicense(sampleVO);
+	}
+	// 보유기술
+	@Override
+	public List<?> selectTechList(SampleVO sampleVO) throws Exception {
+	
+		return sampleDAO.selectTech(sampleVO);
+	}
+	
+	//경력
+	@Override
+	public List<?> selectCareerList(SampleVO sampleVO) throws Exception {
+	
+		return sampleDAO.selectCareer(sampleVO);
 	}
 
 }

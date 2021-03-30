@@ -23,16 +23,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <c:set var="registerFlag" value="${empty sampleVO.id ? 'create' : 'modify'}"/>
-    <title>Sample <c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
-                  <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
+    
+    <title>사원조회
     </title>
     <link type="text/css" rel="stylesheet" href="<c:url value='/css/egovframework/sample.css'/>"/>
     
     <!--For Commons Validator Client Side-->
     <script type="text/javascript" src="<c:url value='/cmmn/validator.do'/>"></script>
     <validator:javascript formName="sampleVO" staticJavascript="false" xhtml="true" cdata="false"/>
-    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javaScript" language="javascript" defer="defer">
         <!--
         /* 글 목록 화면 function */
@@ -59,22 +58,18 @@
         }
         
         -->
+        
+        function fn_egov_selectList() {
+        	frm = document.detailForm;
+           	frm.action = "<c:url value='/addSample.do'/>";
+            frm.submit();
+        }
     </script>
 </head>
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
-
-<form:form commandName="sampleVO" id="detailForm" name="detailForm">
-    <div id="content_pop">
-    	<!-- 타이틀 -->
-    	<div id="title">
-    		<ul>
-    			<li><img src="<c:url value='/images/egovframework/example/title_dot.gif'/>" alt=""/>
-                    <c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
-                    <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
-                </li>
-    		</ul>
-    	</div>
-    	<!-- // 타이틀 -->
+<div><jsp:include page="left.jsp"></jsp:include></div>
+<form:form commandName="searchVO" id="detailForm" name="detailForm">
+   <div id="content_pop">
     	<div id="table">
     	<table width="100%" border="1" cellpadding="0" cellspacing="0" style="bordercolor:#D3E2EC; bordercolordark:#FFFFFF; BORDER-TOP:#C2D0DB 2px solid; BORDER-LEFT:#ffffff 1px solid; BORDER-RIGHT:#ffffff 1px solid; BORDER-BOTTOM:#C2D0DB 1px solid; border-collapse: collapse;">
     		<colgroup>
@@ -85,44 +80,18 @@
         		<tr>
         			<td class="tbtd_caption"><label for="id"><spring:message code="title.sample.id" /></label></td>
         			<td class="tbtd_content">
-        				<form:input path="id" cssClass="essentiality" maxlength="10" readonly="true" />
+        				<form:input path="memberNo" cssClass="txt" maxlength="10" readonly="true" />
         			</td>
         		</tr>
     		</c:if>
     		<tr>
     			<td class="tbtd_caption"><label for="name"><spring:message code="title.sample.name" /></label></td>
     			<td class="tbtd_content">
-    				<form:input path="name" maxlength="30" cssClass="txt"/>
-    				&nbsp;<form:errors path="name" />
+    				<form:input path="memberKnm" maxlength="30" cssClass="txt"/>
+    				
     			</td>
     		</tr>
-    		<tr>
-    			<td class="tbtd_caption"><label for="useYn"><spring:message code="title.sample.useYn" /></label></td>
-    			<td class="tbtd_content">
-    				<form:select path="useYn" cssClass="use">
-    					<form:option value="Y" label="Yes" />
-    					<form:option value="N" label="No" />
-    				</form:select>
-    			</td>
-    		</tr>
-    		<tr>
-    			<td class="tbtd_caption"><label for="description"><spring:message code="title.sample.description" /></label></td>
-    			<td class="tbtd_content">
-    				<form:textarea path="description" rows="5" cols="58" />&nbsp;<form:errors path="description" />
-                </td>
-    		</tr>
-    		<tr>
-    			<td class="tbtd_caption"><label for="regUser"><spring:message code="title.sample.regUser" /></label></td>
-    			<td class="tbtd_content">
-                    <c:if test="${registerFlag == 'modify'}">
-        				<form:input path="regUser" maxlength="10" cssClass="essentiality" readonly="true" />
-        				&nbsp;<form:errors path="regUser" /></td>
-                    </c:if>
-                    <c:if test="${registerFlag != 'modify'}">
-        				<form:input path="regUser" maxlength="10" cssClass="txt"  />
-        				&nbsp;<form:errors path="regUser" /></td>
-                    </c:if>
-    		</tr>
+    		
     	</table>
       </div>
     	<div id="sysbtn">
@@ -160,9 +129,7 @@
     	</div>
     </div>
     <!-- 검색조건 유지 -->
-    <input type="hidden" name="searchCondition" value="<c:out value='${searchVO.searchCondition}'/>"/>
-    <input type="hidden" name="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>"/>
-    <input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
+   
 </form:form>
 </body>
 </html>

@@ -6,6 +6,29 @@
 /*									                                            */
 /********************************************************************************/
 * {margin:0;padding:0;}
+#wrapper{
+ border:0px;
+ width:1054px;
+ padding:22px;
+ position:absolute;
+ top:10px;
+ left:50%;
+ margin-left:-533px;
+ overflow:hidden;
+ }
+ .main{
+ border:0px;
+ width:800px;
+ float:left;
+ padding:10px;
+ }
+ .left{
+ border:0px;
+ width:200px;
+ float:left;
+ padding:10px;
+ margin-left:10px;
+ } 
 * html {height:1px;}
 body {margin:0; padding:0; font-family:"굴림"; font-size:12px; color:#666; scroll:auto;}
 table, tr, td, th {font-family:"돋움"; font-size:11px; color:#333333;}

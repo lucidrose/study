@@ -36,7 +36,10 @@ public class SampleVO extends SampleDefaultVO {
 	private static final long serialVersionUID = 1L;
 	
 	private String viewId;
+	
+	private String viewNm;
 
+	/*TB_MEMBER*/
 	private Integer memberNo; // 사원번호
 	
 	private String memberKnm; // 한글 이름
@@ -92,6 +95,141 @@ public class SampleVO extends SampleDefaultVO {
 	private String listStat; // 상태
 	
 	private String workYdn; // 근무상태
+	
+	/*TB_GRAD*/
+	private Integer gradNo;
+	
+	private String high; // 고등학교
+	
+	private String hMajor; // 전공
+	
+	private String hYear;
+	
+	private String hMonth;
+	
+	private String computer;
+	
+	private String cMajor;
+	
+	private String cYear;
+	
+	private String cMonth;
+	
+	private String college;
+	
+	private String coMajor;
+	
+	private String coYear;
+	
+	private String coMonth;
+	
+	private String university;
+	
+	private String uMajor;
+	
+	private String uYear;
+	
+	private String uMonth;
+	
+	/*TB_EDU*/
+	private Integer eduNo;
+	
+	private String eduNm;
+	
+	private String eduStartDate;
+	
+	private String eduEndDate;
+	
+	private String eduAgency;
+	
+	/*TB_LECENSE*/
+	private Integer licenseNo;
+	
+	private String licenseNm;
+	
+	private String lDate;
+	
+	/*TB_TECH*/
+	private Integer techNo;
+	
+	private String techNm;
+	
+	private String tLevel;
+	
+	/*TB_PROJECT*/
+	private Integer projectNo;
+	
+	private String projectNm;
+	
+	private String pStartDate;
+	
+	private String pEndDate;
+	
+	private String client;
+	
+	private String workCompany;
+	
+	private String field;
+	
+	private String part;
+	
+	private String modelNm;
+	
+	private String os;
+	
+	private String language;
+	
+	private String dbms;
+	
+	private String tool;
+	
+	private String socket;
+	
+	private String remark;
+	
+	/*TB_CAREER*/
+	private Integer careerNo;
+	
+	private String companyNm;
+	
+	private String position;
+	
+	private String startDate;
+	
+	private String endDate;
+	
+	private String task;
+	
+	/*TB_WORK*/
+	private Integer workNo;
+	
+	private String workProjectNm;
+	
+	private String place;
+	
+	private String workStartDate;
+	
+	private String workEndDate;
+	
+	private String salesPrice;
+	
+	private String signPreDate;
+	
+	private String signDate;
+	
+	private String customer;
+	
+	// 테이블 개수
+	private Integer eduCnt; 
+
+	
+	public String getViewNm() {
+		return viewNm;
+	}
+
+	public void setViewNm(String viewNm) {
+		this.viewNm = viewNm;
+	}
 
 	public Integer getMemberNo() {
 		return memberNo;
@@ -332,6 +470,475 @@ public class SampleVO extends SampleDefaultVO {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
+	}
+
+	public String getHigh() {
+		return high;
+	}
+
+	public void setHigh(String high) {
+		this.high = high;
+	}
+
+	public String gethMajor() {
+		return hMajor;
+	}
+
+	public void sethMajor(String hMajor) {
+		this.hMajor = hMajor;
+	}
+
+	public String gethYear() {
+		return hYear;
+	}
+
+	public void sethYear(String hYear) {
+		this.hYear = hYear;
+	}
+
+	public String gethMonth() {
+		return hMonth;
+	}
+
+	public void sethMonth(String hMonth) {
+		this.hMonth = hMonth;
+	}
+
+	public String getComputer() {
+		return computer;
+	}
+
+	public void setComputer(String computer) {
+		this.computer = computer;
+	}
+
+	public String getcMajor() {
+		return cMajor;
+	}
+
+	public void setcMajor(String cMajor) {
+		this.cMajor = cMajor;
+	}
+
+	public String getcYear() {
+		return cYear;
+	}
+
+	public void setcYear(String cYear) {
+		this.cYear = cYear;
+	}
+
+	public String getcMonth() {
+		return cMonth;
+	}
+
+	public void setcMonth(String cMonth) {
+		this.cMonth = cMonth;
+	}
+
+	public String getCollege() {
+		return college;
+	}
+
+	public void setCollege(String college) {
+		this.college = college;
+	}
 	
+	public String getCoMajor() {
+		return coMajor;
+	}
+
+	public void setCoMajor(String coMajor) {
+		this.coMajor = coMajor;
+	}
+
+	public String getCoYear() {
+		return coYear;
+	}
+
+	public void setCoYear(String coYear) {
+		this.coYear = coYear;
+	}
+
+	public String getCoMonth() {
+		return coMonth;
+	}
+
+	public void setCoMonth(String coMonth) {
+		this.coMonth = coMonth;
+	}
+
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getuMajor() {
+		return uMajor;
+	}
+
+	public void setuMajor(String uMajor) {
+		this.uMajor = uMajor;
+	}
+
+	public String getuYear() {
+		return uYear;
+	}
+
+	public void setuYear(String uYear) {
+		this.uYear = uYear;
+	}
+
+	public String getuMonth() {
+		return uMonth;
+	}
+
+	public void setuMonth(String uMonth) {
+		this.uMonth = uMonth;
+	}
+
+	public String getEduNm() {
+		return eduNm;
+	}
+
+	public void setEduNm(String eduNm) {
+		this.eduNm = eduNm;
+	}
+
+	public String getEduStartDate() {
+		return eduStartDate;
+	}
+
+	public void setEduStartDate(String eduStartDate) {
+		this.eduStartDate = eduStartDate;
+	}
+
+	public String getEduEndDate() {
+		return eduEndDate;
+	}
+
+	public void setEduEndDate(String eduEndDate) {
+		this.eduEndDate = eduEndDate;
+	}
+
+	public String getEduAgency() {
+		return eduAgency;
+	}
+
+	public void setEduAgency(String eduAgency) {
+		this.eduAgency = eduAgency;
+	}
+
+	public String getLicenseNm() {
+		return licenseNm;
+	}
+
+	public void setLicenseNm(String licenseNm) {
+		this.licenseNm = licenseNm;
+	}
+
+	public String getlDate() {
+		return lDate;
+	}
+
+	public void setlDate(String lDate) {
+		this.lDate = lDate;
+	}
+
+	public String getTechNm() {
+		return techNm;
+	}
+
+	public void setTechNm(String techNm) {
+		this.techNm = techNm;
+	}
+
+	public String gettLevel() {
+		return tLevel;
+	}
+
+	public void settLevel(String tLevel) {
+		this.tLevel = tLevel;
+	}
+
+	public String getProjectNm() {
+		return projectNm;
+	}
+
+	public void setProjectNm(String projectNm) {
+		this.projectNm = projectNm;
+	}
+
+	public String getpStartDate() {
+		return pStartDate;
+	}
+
+	public void setpStartDate(String pStartDate) {
+		this.pStartDate = pStartDate;
+	}
+
+	public String getpEndDate() {
+		return pEndDate;
+	}
+
+	public void setpEndDate(String pEndDate) {
+		this.pEndDate = pEndDate;
+	}
+
+	public String getClient() {
+		return client;
+	}
+
+	public void setClient(String client) {
+		this.client = client;
+	}
+
+	public String getWorkCompany() {
+		return workCompany;
+	}
+
+	public void setWorkCompany(String workCompany) {
+		this.workCompany = workCompany;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public String getPart() {
+		return part;
+	}
+
+	public void setPart(String part) {
+		this.part = part;
+	}
+
+	public String getModelNm() {
+		return modelNm;
+	}
+
+	public void setModelNm(String modelNm) {
+		this.modelNm = modelNm;
+	}
+
+	public String getOs() {
+		return os;
+	}
+
+	public void setOs(String os) {
+		this.os = os;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getDbms() {
+		return dbms;
+	}
+
+	public void setDbms(String dbms) {
+		this.dbms = dbms;
+	}
+
+	public String getTool() {
+		return tool;
+	}
+
+	public void setTool(String tool) {
+		this.tool = tool;
+	}
+
+	public String getSocket() {
+		return socket;
+	}
+
+	public void setSocket(String socket) {
+		this.socket = socket;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getCompanyNm() {
+		return companyNm;
+	}
+
+	public void setCompanyNm(String companyNm) {
+		this.companyNm = companyNm;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getTask() {
+		return task;
+	}
+
+	public void setTask(String task) {
+		this.task = task;
+	}
+
+	public String getWorkProjectNm() {
+		return workProjectNm;
+	}
+
+	public void setWorkProjectNm(String workProjectNm) {
+		this.workProjectNm = workProjectNm;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getWorkStartDate() {
+		return workStartDate;
+	}
+
+	public void setWorkStartDate(String workStartDate) {
+		this.workStartDate = workStartDate;
+	}
+
+	public String getWorkEndDate() {
+		return workEndDate;
+	}
+
+	public void setWorkEndDate(String workEndDate) {
+		this.workEndDate = workEndDate;
+	}
+
+	public String getSalesPrice() {
+		return salesPrice;
+	}
+
+	public void setSalesPrice(String salesPrice) {
+		this.salesPrice = salesPrice;
+	}
+
+	public String getSignPreDate() {
+		return signPreDate;
+	}
+
+	public void setSignPreDate(String signPreDate) {
+		this.signPreDate = signPreDate;
+	}
+
+	public String getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(String signDate) {
+		this.signDate = signDate;
+	}
+
+	public String getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+	
+	
+
+	public Integer getGradNo() {
+		return gradNo;
+	}
+
+	public void setGradNo(Integer gradNo) {
+		this.gradNo = gradNo;
+	}
+
+	public Integer getEduNo() {
+		return eduNo;
+	}
+
+	public void setEduNo(Integer eduNo) {
+		this.eduNo = eduNo;
+	}
+
+	public Integer getLicenseNo() {
+		return licenseNo;
+	}
+
+	public void setLicenseNo(Integer licenseNo) {
+		this.licenseNo = licenseNo;
+	}
+
+	public Integer getTechNo() {
+		return techNo;
+	}
+
+	public void setTechNo(Integer techNo) {
+		this.techNo = techNo;
+	}
+
+	public Integer getProjectNo() {
+		return projectNo;
+	}
+
+	public void setProjectNo(Integer projectNo) {
+		this.projectNo = projectNo;
+	}
+
+
+	public Integer getWorkNo() {
+		return workNo;
+	}
+
+	public void setWorkNo(Integer workNo) {
+		this.workNo = workNo;
+	}
+
+	public Integer getCareerNo() {
+		return careerNo;
+	}
+
+	public void setCareerNo(Integer careerNo) {
+		this.careerNo = careerNo;
+	}
+
+	
+		
 }

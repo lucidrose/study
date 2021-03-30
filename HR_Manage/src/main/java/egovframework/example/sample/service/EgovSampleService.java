@@ -17,6 +17,8 @@ package egovframework.example.sample.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 /**
  * @Class Name : EgovSampleService.java
  * @Description : EgovSampleService Class
@@ -65,7 +67,7 @@ public interface EgovSampleService {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-	SampleVO selectSample(SampleVO vo) throws Exception;
+	SampleVO selectSample(SampleVO vo, String viewId) throws Exception;
 
 	/**
 	 * 글 목록을 조회한다.
@@ -74,6 +76,7 @@ public interface EgovSampleService {
 	 * @exception Exception
 	 */
 	List<?> selectSampleList(SampleDefaultVO searchVO) throws Exception;
+	
 
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -82,5 +85,16 @@ public interface EgovSampleService {
 	 * @exception
 	 */
 	int selectSampleListTotCnt(SampleDefaultVO searchVO);
+
+	List<?>  selectEduList(SampleVO sampleVO) throws Exception;
+	
+	SampleVO selectVgrad(SampleVO sampleVO) throws Exception;
+	
+	List<?>  selectLicenseList(SampleVO sampleVO) throws Exception;
+	
+	List<?>  selectTechList(SampleVO sampleVO) throws Exception;
+	
+	List<?>  selectCareerList(SampleVO sampleVO) throws Exception;
+
 
 }

@@ -65,12 +65,30 @@ public interface SampleMapper {
 	void deleteSample(SampleVO vo) throws Exception;
 
 	/**
-	 * 글을 조회한다.
+	 * 글을 조회한다. - memberInfo
 	 * @param vo - 조회할 정보가 담긴 SampleVO
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
 	SampleVO selectMember(SampleVO vo) throws Exception;
+	
+	// eduInfo 조회
+	List<?> selectEdu(SampleVO vo) throws Exception;
+
+	// license 조회
+	List<?> selectLicense(SampleVO vo) throws Exception;
+	
+	// tech 조회
+	List<?> selectTech(SampleVO vo) throws Exception;
+	
+	// project 조회
+	SampleVO selectProject(SampleVO vo) throws Exception;
+	
+	// career 조회
+	List<?> selectCareer(SampleVO vo) throws Exception;
+	
+	// work 조회
+	SampleVO selectWork(SampleVO vo) throws Exception;
 
 	/**
 	 * 글 목록을 조회한다.
@@ -79,6 +97,7 @@ public interface SampleMapper {
 	 * @exception Exception
 	 */
 	List<?> selectSampleList(SampleDefaultVO searchVO) throws Exception;
+	
 
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -87,5 +106,7 @@ public interface SampleMapper {
 	 * @exception
 	 */
 	int selectSampleListTotCnt(SampleDefaultVO searchVO);
+
+	SampleVO selectVgrad(SampleVO sampleVO)throws Exception;
 
 }
