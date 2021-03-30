@@ -170,7 +170,7 @@ public class EgovSampleController {
 		{
 			System.out.println(">>>>> 성공");
 			System.out.println(sampleVO.getHigh().toString());
-			sampleService.insertSample(sampleVO, "grad");
+			sampleService.insertSample(sampleVO, "grad"); 
 		}
 		return "forward:/egovSampleList.do";
 	}
