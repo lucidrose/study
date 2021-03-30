@@ -53,7 +53,7 @@
             // 저장 버튼 클릭 >> 저장 & 수정
         function fn_save() {
         	var url = "<c:url value='/addSample.do'/>";
-        	/* alert(${sampleVO.memberNo}); */
+        	
         	frm = document.detailForm;
         	if('${sampleVO.memberNo}') {
         		url = "<c:url value='/update.do'/>";

@@ -8,10 +8,16 @@
 		<result property="memberEnm" column="MEMBER_ENM"/>
 		<result property="memberJnm" column="MEMBER_JNM"/>
 		<result property="rrn1" column="RRN1"/>
+		<result property="rrn2" column="RRN2"/>
+		<result property="eduNm" column="EDU_NM"/>
+		<result property="eduStartDate" column="EDU_START_DATE"/>
+		<result property="eduEndDate" column="EDU_END_DATE"/>
+		<result property="eduAgency" column="EDU_AGENCY"/>
 	</resultMap>
 
 	<insert id="insertMember" parameterType="SampleVO">
 
+	    	<!-- 멤버등록 -->
 			INSERT INTO TB_HR
 				( 	MEMBER_NO
 				  , MEMBER_KNM
@@ -42,7 +48,7 @@
 				  , LIST_STAT
 				  , WORK_YDN
 				   )
-			VALUES ( (SELECT MAX(MEMBER_NO) + 1 FROM TB_HR)
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_HR)
 				  , #{memberKnm, jdbcType=VARCHAR}
 				  , #{memberEnm, jdbcType=VARCHAR}
 				  , #{memberJnm, jdbcType=VARCHAR}
@@ -70,7 +76,81 @@
 				  , #{alchol, jdbcType=VARCHAR}
 				  , #{listStat, jdbcType=VARCHAR}
 				  , #{workYdn, jdbcType=VARCHAR} )
+			<!-- 	  
+			학력
+			INSERT INTO TB_GRAD ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_GRAD) )
+			
+			교육기관
+			INSERT INTO TB_EDU ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_EDU) )
+			
+			자격증
+			INSERT INTO TB_LICENSE ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_LICENSE) )
+			
+			보유기술
+			INSERT INTO TB_TECH ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_TECH) )
+			
+			프로젝트
+			INSERT INTO TB_PROJECT ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_PROJECT) )
+			
+			경력
+			INSERT INTO TB_CAREER ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_CAREER) )
+			
+			근무
+			INSERT INTO TB_WORK ( MEMBER_NO )
+			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_WORK) )
+ -->
+	</insert>
+	
+	<insert id="insertGrad" parameterType="SampleVO">
 
+	    	<!-- 멤버등록 -->
+			INSERT INTO TB_GRAD
+				( 	MEMBER_NO
+				  , GRAD_NO
+				  , HIGH 
+				  , H_MAJOR 
+				  , H_YEAR 
+				  , H_MONTH 
+				  , COMPUTER 
+				  , C_MAJOR 
+				  , C_YEAR 
+				  , C_MONTH 
+				  , COLLEGE 
+				  , CO_MAJOR 
+				  , CO_YEAR 
+				  , CO_MONTH 
+				  , UNIVERSITY 
+				  , U_MAJOR 
+				  , U_YEAR 
+				  , U_MONTH 
+				   )
+			VALUES ( 
+					#{memberNo, jdbcType=INTEGER}
+				  ,	(SELECT NVL(MAX(GRAD_NO), 0) + 1 FROM TB_GRAD WHERE MEMBER_NO = #{memberNo ,jdbcType=INTEGER})
+				  , #{high, jdbcType=VARCHAR}
+				  , #{hMajor, jdbcType=VARCHAR}
+				  , #{hYear, jdbcType=VARCHAR}
+				  , #{hMonth, jdbcType=VARCHAR}
+				  , #{computer, jdbcType=VARCHAR}
+				  , #{cMajor, jdbcType=VARCHAR}
+				  , #{cYear, jdbcType=VARCHAR}
+				  , #{cMonth, jdbcType=VARCHAR}
+				  , #{college, jdbcType=VARCHAR}
+				  , #{coMajor, jdbcType=VARCHAR}
+				  , #{coYear, jdbcType=VARCHAR}
+				  , #{coMonth, jdbcType=VARCHAR}
+				  , #{university, jdbcType=VARCHAR}
+				  , #{uMajor, jdbcType=VARCHAR}
+				  , #{uYear, jdbcType=VARCHAR}
+				  , #{uMonth, jdbcType=VARCHAR}
+				  )
+			
 	</insert>
 
 	<update id="updateSample">
@@ -162,6 +242,62 @@
 			WHERE MEMBER_NO = #{memberNo ,jdbcType=INTEGER}
 
 	</update>
+	
+	<update id="updateGrad">
+
+			UPDATE TB_GRAD
+			SET 
+			 	<if test="high != null and high != ''">
+			 	, HIGH = #{high ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="hMajor != null and hMajor != ''">
+			 	, H_MAJOR = #{hMajor ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="hYear != null and hYear != ''">
+			 	, H_YEAR = #{hYear ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="hMonth != null and hMonth != ''">
+			 	, H_MONTH = #{hMonth ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="computer != null and computer != ''">
+			 	, COMPUTER = #{computer ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="cMajor != null and cMajor != ''">
+			 	, C_MAJOR = #{cMajor ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="cYear != null and cYear != ''">
+			 	, C_YEAR = #{cYear ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="cMonth != null and cMonth != ''">
+			 	, C_MONTH = #{cMonth ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="college != null and college != ''">
+			 	, COLLEGE = #{college ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="coMajor != null and coMajor != ''">
+			 	, CO_MAJOR = #{coMajor ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="coYear != null and coYear != ''">
+			 	, CO_YEAR = #{coYear ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="coMonth != null and coMonth != ''">
+			 	, CO_MONTH = #{coMonth ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="university != null and university != ''">
+			 	, UNIVERSITY = #{university ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="uMajor != null and uMajor != ''">
+			 	, U_MAJOR = #{uMajor ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="uYear != null and uYear != ''">
+			 	, U_YEAR = #{uYear ,jdbcType=VARCHAR}
+			 	</if>
+			 	<if test="yMonth != null and yMonth != ''">
+			 	, U_MONTH = #{yMonth ,jdbcType=VARCHAR}	
+			 	</if>		 	
+			WHERE MEMBER_NO = #{memberNo ,jdbcType=INTEGER}
+				AND GRAD_NO = #{gradNo ,jdbcType=INTEGER}
+	</update>
 
 	<delete id="deleteSample">
 
@@ -205,113 +341,151 @@
 
 	</select>
 	
-	<select id="selectMember" resultMap="sample">
+	<select id="selectVgrad" resultMap="sample">
 			SELECT
-				MEMBER_NO
-				  , HIGH
-				  , H_MAJOR
-				  , H_YEAR
-				  , H_MONTH
-				  , COMPUTER
-				  , C_MAJOR
-				  , C_YEAR
-				  , C_MONTH
-				  , COLLEGE 
-				  , CO_MAJOR
-				  , CO_YEAR
-				  , CO_MONTH
-				  , UNIVERSITY
-				  , U_MAJOR
-				  , U_YEAR 
-				  , U_MONTH
-			FROM TB_GRAD
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				H.MEMBER_NO
+				  , H.MEMBER_KNM
+				  , H.RRN1
+				  , H.RRN2
+				  , G.HIGH
+				  , G.H_MAJOR
+				  , G.H_YEAR
+				  , G.H_MONTH
+				  , G.COMPUTER
+				  , G.C_MAJOR
+				  , G.C_YEAR
+				  , G.C_MONTH
+				  , G.COLLEGE 
+				  , G.CO_MAJOR
+				  , G.CO_YEAR
+				  , G.CO_MONTH
+				  , G.UNIVERSITY
+				  , G.U_MAJOR
+				  , G.U_YEAR 
+				  , G.U_MONTH
+			FROM TB_GRAD G
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = G.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+
+	</select>
+	 
+	<select id="selectEdu"  resultMap="sample">
+			SELECT
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, E.EDU_NM
+				, E.EDU_START_DATE
+				, E.EDU_END_DATE
+				, E.EDU_AGENCY
+			FROM TB_EDU E
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = E.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
 	</select>
 	
-	<select id="selectEdu" resultMap="sample">
-			SELECT
-				  MEMBER_NO
-				, EDU_NM
-				, EDU_START_DATE
-				, EDU_END_DATE
-				, EDU_AGENCY
-			FROM TB_EDU
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+	
 
-	</select>
+	
 	
 	<select id="selectLicense" resultMap="sample">
 			SELECT
-				  MEMBER_NO
-				, LICENSE_NM
-				, L_DATE
-			FROM TB_LICENSE
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, L.LICENSE_NM
+				, L.L_DATE
+			FROM TB_LICENSE L
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = L.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
 	</select>
 	
 	<select id="selectTech" resultMap="sample">
 			SELECT
-				  MEMBER_NO
-				, TECH_NM
-				, T_LEVEL
-			FROM TB_TECH
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, T.TECH_NM
+				, T.T_LEVEL
+			FROM TB_TECH T
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = T.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
 	</select>
-	
-	<select id="selecProject" resultMap="sample">
+
+	<select id="selectProject" resultMap="sample">
 			SELECT
-				  MEMBER_NO
-				, PROJECT_NM
-				, P_START_DATE
-				, P_END_DATE
-				, CLIENT
-				, WORK_COMPANY
-				, FIELD
-				, PART
-				, MODEL_NM
-				, OS
-				, LANGUAGE
-				, DBMS
-				, TOOL
-				, SOCKET
-				, REMARK
-			FROM TB_TECH
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, P.PROJECT_NM
+				, P.P_START_DATE
+				, P.P_END_DATE
+				, P.CLIENT
+				, P.WORK_COMPANY
+				, P.FIELD
+				, P.PART
+				, P.MODEL_NM
+				, P.OS
+				, P.LANGUAGE
+				, P.DBMS
+				, P.TOOL
+				, P.SOCKET
+				, P.REMARK
+			FROM TB_PROJECT P
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = P.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
 	</select>
-	
+		
 	<select id="selectCareer" resultMap="sample">
 			SELECT
-				  MEMBER_NO
-				, COMPANY_NM
-				, POSITION
-				, START_DATE
-				, END_DATE
-				, TASK
-			FROM TB_CAREER
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, C.COMPANY_NM
+				, C.POSITION
+				, C.START_DATE
+				, C.END_DATE
+				, C.TASK
+			FROM TB_CAREER C
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = C.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
 	</select>
 	
 	<select id="selectWork" resultMap="sample">
 			SELECT
-				  MEMBER_NO
-				, WORK_PROJECT_NM
-				, PLACE
-				, WORK_START_DATE
-				, WORK_END_DATE
-				, SALES_PRICE
-				, SIGN_PRE_DATE
-				, SIGN_DATE
-				, CUSTOMER
-			FROM TB_WORK
-			WHERE MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
+				  H.MEMBER_NO
+				, H.MEMBER_KNM
+				, H.RRN1
+				, H.RRN2
+				, W.WORK_PROJECT_NM
+				, W.PLACE
+				, W.WORK_START_DATE
+				, W.WORK_END_DATE
+				, W.SALES_PRICE
+				, W.SIGN_PRE_DATE
+				, W.SIGN_DATE
+				, W.CUSTOMER
+			FROM TB_WORK W
+			LEFT OUTER JOIN TB_HR H
+				ON H.MEMBER_NO = W.MEMBER_NO
+			WHERE H.MEMBER_NO=#{memberNo, jdbcType=VARCHAR}
 
-	</select>
-
+	</select> 
 	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
 
 			SELECT
@@ -358,5 +532,6 @@
 				</choose>
 			</if> -->
 	</select>
+		
 
 </mapper>

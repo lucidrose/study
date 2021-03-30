@@ -73,7 +73,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 * @exception Exception
 	 */
 	@Override
-	public void insertSample(SampleVO vo) throws Exception {
+	public void insertSample(SampleVO vo, String viewId) throws Exception {
 		LOGGER.debug(vo.toString());
 
 		/** ID Generation Service */
@@ -81,7 +81,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		//vo.setId(id);
 		LOGGER.debug(vo.toString());*/
 
-		sampleDAO.insertMember(vo);
+		sampleDAO.insertData(vo, viewId);
 	}
 
 	/**

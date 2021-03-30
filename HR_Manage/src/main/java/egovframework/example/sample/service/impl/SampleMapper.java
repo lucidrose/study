@@ -46,7 +46,7 @@ public interface SampleMapper {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	void insertMember(SampleVO vo) throws Exception;
+	void insertData(SampleVO vo, String viewId) throws Exception;
 
 	/**
 	 * 글을 수정한다.

@@ -43,7 +43,7 @@ public interface EgovSampleService {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	void insertSample(SampleVO vo) throws Exception;
+	void insertSample(SampleVO vo, String viewId) throws Exception;
 
 	/**
 	 * 글을 수정한다.

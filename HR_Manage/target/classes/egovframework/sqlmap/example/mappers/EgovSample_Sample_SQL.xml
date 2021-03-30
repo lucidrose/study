@@ -106,6 +106,52 @@
 			VALUES ( (SELECT NVL(MAX(MEMBER_NO), 0) + 1 FROM TB_WORK) )
  -->
 	</insert>
+	
+	<insert id="insertGrad" parameterType="SampleVO">
+
+	    	<!-- 멤버등록 -->
+			INSERT INTO TB_GRAD
+				( 	MEMBER_NO
+				  , GRAD_NO
+				  , HIGH 
+				  , H_MAJOR 
+				  , H_YEAR 
+				  , H_MONTH 
+				  , COMPUTER 
+				  , C_MAJOR 
+				  , C_YEAR 
+				  , C_MONTH 
+				  , COLLEGE 
+				  , CO_MAJOR 
+				  , CO_YEAR 
+				  , CO_MONTH 
+				  , UNIVERSITY 
+				  , U_MAJOR 
+				  , U_YEAR 
+				  , U_MONTH 
+				   )
+			VALUES ( 
+					#{memberNo, jdbcType=INTEGER}
+				  ,	(SELECT NVL(MAX(GRAD_NO), 0) + 1 FROM TB_GRAD WHERE MEMBER_NO = #{memberNo ,jdbcType=INTEGER})
+				  , #{high, jdbcType=VARCHAR}
+				  , #{hMajor, jdbcType=VARCHAR}
+				  , #{hYear, jdbcType=VARCHAR}
+				  , #{hMonth, jdbcType=VARCHAR}
+				  , #{computer, jdbcType=VARCHAR}
+				  , #{cMajor, jdbcType=VARCHAR}
+				  , #{cYear, jdbcType=VARCHAR}
+				  , #{cMonth, jdbcType=VARCHAR}
+				  , #{college, jdbcType=VARCHAR}
+				  , #{coMajor, jdbcType=VARCHAR}
+				  , #{coYear, jdbcType=VARCHAR}
+				  , #{coMonth, jdbcType=VARCHAR}
+				  , #{university, jdbcType=VARCHAR}
+				  , #{uMajor, jdbcType=VARCHAR}
+				  , #{uYear, jdbcType=VARCHAR}
+				  , #{uMonth, jdbcType=VARCHAR}
+				  )
+			
+	</insert>
 
 	<update id="updateSample">
 

@@ -156,19 +156,21 @@ public class EgovSampleController {
 	@RequestMapping(value = "/addSample.do", method = RequestMethod.POST)
 	public String addSample(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO, Model model, SessionStatus status)
 			throws Exception {
-		sampleService.insertSample(sampleVO);
+		sampleService.insertSample(sampleVO, "member");
 		status.setComplete();
 		return "forward:/egovSampleList.do";
 	}
 	// 글을 등록한다.
-	@RequestMapping(value = "/tabAdd.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/tabAdd.do")
 	public String tabAdd(@ModelAttribute("searchVO") SampleDefaultVO searchVO, SampleVO sampleVO, Model model, SessionStatus status)
 			throws Exception {
 		/*sampleService.insertSample(sampleVO);
 		status.setComplete();*/
 		if(sampleVO.getViewId().toString().equals("grad"))
 		{
-			System.out.println("성공");
+			System.out.println(">>>>> 성공");
+			System.out.println(sampleVO.getHigh().toString());
+			sampleService.insertSample(sampleVO, "grad");
 		}
 		return "forward:/egovSampleList.do";
 	}

@@ -52,8 +52,14 @@ public class SampleDAO extends EgovAbstractDAO {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	public String insertMember(SampleVO vo) throws Exception {
-		return (String) insert("sampleDAO.insertMember", vo);
+	public String insertData(SampleVO vo, String viewId) throws Exception {
+		if(viewId.equals("member")) {
+			return (String) insert("sampleDAO.insertMember", vo);
+		}else if(viewId.equals("grad")) {
+			return (String) insert("sampleDAO.insertGrad", vo);
+		}
+		
+		return null;
 	}
 
 	/**

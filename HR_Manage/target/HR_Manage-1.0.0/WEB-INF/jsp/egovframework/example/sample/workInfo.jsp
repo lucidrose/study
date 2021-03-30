@@ -75,23 +75,31 @@
     		}
         	else if(value == '1'){
         		// 교육 정보
-        		location.href = "<c:url value='/addEduView.do'/>";
+        		alert($("#memberNo").val());
+        		/* location.href='/addEduView.do?memberNo='+$("#memberNo").val();  */
+        		/* location.href = "<c:url value='/addEduView.do'/>"; */
+        		location.href = '/tabView.do?viewNm=' + 'eduNgrad'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}
         	else if(value == '2'){
         		// 자격증 및 보유기술 정보
-        		location.href = "<c:url value='/addTechView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'licenseNtech'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '3'){
         		// 프로젝트 정보
-        		location.href = "<c:url value='/addProjectView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'project'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '4'){
         		// 경력정보
-        		location.href = "<c:url value='/addCareerView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'career'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else {
         		// 근무정보
-        		location.href = "<c:url value='/addWorkView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'work'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}        	
         }
         
@@ -152,11 +160,11 @@
 	                    <tr> 
 	                      <td width="97" height="31" align="center" bgcolor="#E4EBF1"><strong>사원명</strong></td>
 	                      <td width="128" align="center" bgcolor="#E4EBF1">
-	                      	<form:input type="text" path="memberKnm" name="memberKnm" />
+	                      	<form:input type="text" path="memberKnm" name="memberKnm" value="${resultMember.memberKnm}" readonly="true"  />
 	                      </td>
 	                      <td width="131" align="center" bgcolor="#E4EBF1"><strong> 주민등록번호 </strong></td>
 	                      <td width="239" align="center" bgcolor="#E4EBF1">
-	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" /></td>
+	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" value="${resultMember.rrn1}" readonly="true"  /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" value="${resultMember.rrn2}" readonly="true"  /></td>
 	                    </tr>
 	                  	</table>
 	                  </td>
@@ -177,7 +185,7 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>프로젝트명</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="86"></strong></td>
+				                 <td align="left"><strong><form:input path="workProjectNm" name="workProjectNm" type="text" size="86" value="${resultWork.workProjectNm}" /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 
@@ -187,7 +195,7 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>근무장소</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="86"></strong></td>
+				                 <td align="left"><strong><form:input path="place" name="place" type="text" size="86" value="${resultWork.place}" /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 
@@ -197,10 +205,10 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>근무시작일</strong></td>
-				                 <td width="150" align="left"><strong><input name="textfield33254" type="text" size="33"></strong></td>
+				                 <td width="150" align="left"><strong><form:input path="workStartDate" name="workStartDate" type="text" size="33" value="${resultWork.workStartDate}" /></strong></td>
 				                 <td width="115" align="center"><strong>근무종료일</strong></td>
 				                 <td align="left">
-				                 	<strong><input name="textfield332542" type="text" size="33"></strong>
+				                 	<strong><form:input path="workEndDate" name="workEndDate" type="text" size="33" value="${resultWork.workEndDate}" /></strong>
 				                 </td>
 				             </tr>
 				         </table>	
@@ -211,7 +219,7 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>매출액</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="86"></strong></td>
+				                 <td align="left"><strong><form:input path="salesPrice" name="salesPrice" type="text" size="86" value="${resultWork.salesPrice}" /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 
@@ -221,10 +229,10 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>결제예정일</strong></td>
-				                 <td width="150" align="left"><strong><input name="textfield33254" type="text" size="33"></strong></td>
+				                 <td width="150" align="left"><strong><form:input path="signPreDate" name="signPreDate" type="text" size="33" value="${resultWork.signPreDate}" /></strong></td>
 				                 <td width="115" align="center"><strong>결제일</strong></td>
 				                 <td align="left">
-				                 	<strong><input name="textfield332542" type="text" size="33"></strong>
+				                 	<strong><form:input path="signDate" name="signDate" type="text" size="33" value="${resultWork.signDate}" /></strong>
 				                 </td>
 				             </tr>
 				         </table>	
@@ -238,9 +246,9 @@
 				                 <td width="580" align="left">
 				                 	<strong>
 				                 		<select style="width:207px;">
-			                             	<option value="" <c:if test="${sampleVO.moneyType eq 'M'}"> selected </c:if>>선택하세요</option>
-			                             	<option value="1" <c:if test="${sampleVO.moneyType eq 'W'}"> selected </c:if>>1</option>
-			                             	<option value="2" <c:if test="${sampleVO.moneyType eq 'D'}"> selected </c:if>>2</option>
+			                             	<option value="" >선택하세요</option>
+			                             	<option value="1" <c:if test="${resultWork.customer eq '1'}"> selected </c:if>>1</option>
+			                             	<option value="2" <c:if test="${resultWork.customer eq '2'}"> selected </c:if>>2</option>
 			                             </select> 
 				                 	</strong>
 				                 </td>

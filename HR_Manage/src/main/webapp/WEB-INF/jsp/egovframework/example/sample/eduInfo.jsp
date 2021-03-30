@@ -71,8 +71,23 @@
         	{
         		if(${fn:length(resultGrad)} == 0)
         		{
-        			location.href = '/tabAdd.do?viewId=' + 'grad';
+        			/* location.href = '/tabAdd.do?viewId=' + 'grad'; */
+        			$.ajax({
+        				type:'post',
+        				url:'/tabAdd.do',
+        				data:{
+	        					viewId : "grad",
+	        					high:$("#high").val()
+        				},
+        				success: function() {
+        					alert("성공");
+        				},
+        				error: function() {
+        					alert("실패");
+        				}
+        			})
         		}
+        			
         	}
         }
             
@@ -303,7 +318,7 @@
 		      <div id="sysbtn">
 	    		<ul>
 	    			<li>
-	                    <span class="btn_blue_l">
+	                    <span class="btn_blue_l" id="save">
 	                        <!-- <a href="javascript:fn_egov_selectList();">저장</a> -->
 	                        <a href="javascript:fn_save('grad');">저장</a>
 	                        <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>

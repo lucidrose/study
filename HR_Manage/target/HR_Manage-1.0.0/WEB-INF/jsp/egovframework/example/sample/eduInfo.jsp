@@ -3,6 +3,7 @@
 <%@ taglib prefix="form"      uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <%@ taglib prefix="spring"    uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
   /**
   * @Class Name : egovSampleRegister.jsp
@@ -49,19 +50,33 @@
            	frm.action = "<c:url value='/addSample.do'/>";
             frm.submit(); */
             
+          $(document).ready(function() {
+  	        alert("${fn:length(resultEdu)}");
+
+  	    });
+            
             // 저장 버튼 클릭 >> 저장 & 수정
-        function fn_save() {
-        	var url = "<c:url value='/addSample.do'/>";
+        function fn_save(value) {
+        	/* var url = "<c:url value='/addSample.do'/>"; */
         	/* alert(${sampleVO.memberNo}); */
-        	frm = document.detailForm;
+        	/* frm = document.detailForm;
         	if('${sampleVO.memberNo}') {
         		url = "<c:url value='/update.do'/>";
         		alert('수정되었습니다');
         	}
         	frm.action = url;
-        	frm.submit(); 
-        	alert('저장되었습니다');
-        	
+        	frm.submit(); */ 
+        	alert(value);
+        	if(value == 'grad')
+        	{
+        		if(${fn:length(resultGrad)} == 0)
+        		{
+        			/* location.href = '/tabAdd.do?viewId=' + 'grad'; */
+        			$("#save").on("click",function() {
+        				alert("test");})
+        			}
+        		}
+        	}
         }
             
      // 취소 버튼 클릭 >> 목록으로 이동 
@@ -75,23 +90,31 @@
     		}
         	else if(value == '1'){
         		// 교육 정보
-        		location.href = "<c:url value='/addEduView.do'/>";
+        		alert($("#memberNo").val());
+        		/* location.href='/addEduView.do?memberNo='+$("#memberNo").val();  */
+        		/* location.href = "<c:url value='/addEduView.do'/>"; */
+        		location.href = '/tabView.do?viewNm=' + 'eduNgrad'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}
         	else if(value == '2'){
         		// 자격증 및 보유기술 정보
-        		location.href = "<c:url value='/addTechView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'licenseNtech'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '3'){
         		// 프로젝트 정보
-        		location.href = "<c:url value='/addProjectView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'project'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '4'){
         		// 경력정보
-        		location.href = "<c:url value='/addCareerView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'career'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else {
         		// 근무정보
-        		location.href = "<c:url value='/addWorkView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'work'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}        	
         }
         
@@ -152,11 +175,12 @@
 	                    <tr> 
 	                      <td width="97" height="31" align="center" bgcolor="#E4EBF1"><strong>사원명</strong></td>
 	                      <td width="128" align="center" bgcolor="#E4EBF1">
-	                      	<form:input type="text" path="memberKnm" name="memberKnm" />
+	                      	<form:input type="text" path="memberKnm" name="memberKnm" value="${resultMember.memberKnm}" readonly="true" />
+	                      	<%-- <c:out value="${result.gender}"/> --%>
 	                      </td>
 	                      <td width="131" align="center" bgcolor="#E4EBF1"><strong> 주민등록번호 </strong></td>
 	                      <td width="239" align="center" bgcolor="#E4EBF1">
-	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" /></td>
+	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" value="${resultMember.rrn1}" readonly="true"  /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" value="${resultMember.rrn2}" readonly="true"  /></td>
 	                    </tr>
 	                  	</table>
 	                  </td>
@@ -180,21 +204,21 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				                 <td width="109"><strong>
-				                   <input name="textfield33254" type="text" size="15">
+				                 	<form:input path="high" name="high" type="text" size="15" value="${resultGrad.high}" />
 				                 </strong></td>
 				                 <td width="70"><strong>고등학교</strong></td>
 				                 <td width="108"><strong>
-				                   <input name="textfield332542" type="text" size="15">
+				                   <form:input path="hMajor" name="hMajor" type="text" size="15" value="${resultGrad.hMajor}" />
 				                 </strong></td>
 				                 <td width="56"><strong>과 졸업</strong></td>
 				                 <td width="67"><strong>
-				                   <input name="textfield3325422" type="text" size="8">
+				                   <form:input path="hYear" name="hYear" type="text" size="15" value="${resultGrad.hMajor}"  />
 				                 </strong></td>
 				                 <td width="32"><strong>년
 				                   
 				                 </strong></td>
 				                 <td width="66"><strong>
-				                   <input name="textfield33254222" type="text" size="8">
+				                   <form:input path="hMonth" name="hMonth" type="text" size="15" value="${resultGrad.hMonth}" />
 				                 </strong></td>
 				                 <td width="18"><strong>월</strong></td>
 				             </tr>
@@ -206,21 +230,20 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				                 <td width="109"><strong>
-				                   <input name="textfield33254" type="text" size="15">
+				                   <form:input  path="computer" name="computer" type="text" size="15" value="${resultGrad.computer}" />
 				                 </strong></td>
 				                 <td width="70"><strong>전산원</strong></td>
 				                 <td width="108"><strong>
-				                   <input name="textfield332542" type="text" size="15">
+				                   <form:input  path="cMajor" name="cMajor" type="text" size="15" value="${resultGrad.cMajor}" />
 				                 </strong></td>
 				                 <td width="56"><strong>과 졸업</strong></td>
 				                 <td width="67"><strong>
-				                   <input name="textfield3325422" type="text" size="8">
+				                   <form:input  path="cYear" name="cYear" type="text" size="15" value="${resultGrad.cYear}" />
 				                 </strong></td>
-				                 <td width="32"><strong>년
-				                   
+				                 <td width="32"><strong>년				                   
 				                 </strong></td>
 				                 <td width="66"><strong>
-				                   <input name="textfield33254222" type="text" size="8">
+				                   <form:input  path="cMonth" name="cMonth" type="text" size="15" value="${resultGrad.cMonth}" />
 				                 </strong></td>
 				                 <td width="18"><strong>월</strong></td>
 				             </tr>
@@ -232,21 +255,21 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				                 <td width="109"><strong>
-				                   <input name="textfield33254" type="text" size="15">
+				                   <form:input  path="college" name="college" type="text" size="15" value="${resultGrad.college}" />
 				                 </strong></td>
 				                 <td width="70"><strong>전문대학</strong></td>
 				                 <td width="108"><strong>
-				                   <input name="textfield332542" type="text" size="15">
+				                   <form:input  path="coMajor" name="coMajor" type="text" size="15" value="${resultGrad.coMajor}" />
 				                 </strong></td>
 				                 <td width="56"><strong>과 졸업</strong></td>
 				                 <td width="67"><strong>
-				                   <input name="textfield3325422" type="text" size="8">
+				                   <form:input  path="coYear" name="coYear" type="text" size="15" value="${resultGrad.coYear}" />
 				                 </strong></td>
 				                 <td width="32"><strong>년
 				                   
 				                 </strong></td>
 				                 <td width="66"><strong>
-				                   <input name="textfield33254222" type="text" size="8">
+				                   <form:input  path="coMonth" name="coMonth" type="text" size="15" value="${resultGrad.coMonth}" />
 				                 </strong></td>
 				                 <td width="18"><strong>월</strong></td>
 				             </tr>
@@ -258,21 +281,21 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				                 <td width="109"><strong>
-				                   <input name="textfield33254" type="text" size="15">
+				                   <form:input  path="university" name="university" type="text" size="15" value="${resultGrad.university}" />
 				                 </strong></td>
 				                 <td width="70"><strong>대학교(명)</strong></td>
 				                 <td width="108"><strong>
-				                   <input name="textfield332542" type="text" size="15">
+				                   <form:input  path="uMajor" name="uMajor" type="text" size="15" value="${resultGrad.uMajor}" />
 				                 </strong></td>
 				                 <td width="56"><strong>과 졸업</strong></td>
 				                 <td width="67"><strong>
-				                   <input name="textfield3325422" type="text" size="8">
+				                   <form:input  path="uYear" name="uYear" type="text" size="15" value="${resultGrad.uYear}" />
 				                 </strong></td>
 				                 <td width="32"><strong>년
 				                   
 				                 </strong></td>
 				                 <td width="66"><strong>
-				                   <input name="textfield33254222" type="text" size="8">
+				                   <form:input  path="uMonth" name="uMonth" type="text" size="15" value="${resultGrad.uMonth}" />
 				                 </strong></td>
 				                 <td width="18"><strong>월</strong></td>
 				             </tr>
@@ -280,6 +303,17 @@
 				     </td> 
 				  </tr>
 		      </table>
+		      <div id="sysbtn">
+	    		<ul>
+	    			<li>
+	                    <span class="btn_blue_l" id="save">
+	                        <!-- <a href="javascript:fn_egov_selectList();">저장</a> -->
+	                        <a href="javascript:fn_save('grad');">저장</a>
+	                        <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
+	                    </span>
+	                </li>
+	            </ul>
+	    	 </div>
 		      <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	      		<tr>
 		          <td height="15" align="left" valign="top">
@@ -294,13 +328,14 @@
 		      </table>
 		      <table width="100%"  border="0" cellpadding="0" cellspacing="0">
 		      <!-- for  start-->
-		      <%-- 	<c:forEach var="result" items="${resultList}" varStatus="status"> --%>
-		      	<tr height="30">
+		    <c:choose>
+		    	<c:when test="${fn:length(resultEdu) eq 0}">
+		    		<tr height="30">
 	                <td bgcolor="#E4EBF1">
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			 <td width="70"><strong>교육명</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="93"></strong></td>
+				                 <td align="left"><strong><form:input  path="eduNm" name="eduNm" type="text" size="93" /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 
@@ -310,75 +345,54 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			 <td width="70"><strong>교육시작일</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="23"></strong></td>
+				                 <td align="left"><strong><form:input  path="eduStartDate" name="eduStartDate" type="text" size="23"  /></strong></td>
 				                 <td align="center" width="70"><strong>교육종료일</strong></td>
-				                 <td align="left"><strong><input name="textfield332542" type="text" size="20"></strong></td>
+				                 <td align="left"><strong><form:input  path="eduEndDate" name="eduEndDate" type="text" size="20"  /></strong></td>
 				                 <td align="center" width="70"><strong>교육기관</strong></td>
-				                 <td align="left"><strong><input name="textfield3325422" type="text" size="23"></strong></td>
+				                 <td align="left"><strong><form:input  path="eduAgency" name="eduAgency" type="text" size="20"  /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 
 				  </tr>
-				 <%--  </c:forEach> --%>
+		    	</c:when>  
+		    	<c:otherwise>
+		    		<c:forEach var="resultEdu" items="${resultEdu}" varStatus="status"> 
+				      	<tr height="30">
+			                <td bgcolor="#E4EBF1">
+			                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						      		<tr align="left" bgcolor="#E4EBF1">
+						      			 <td width="70"><strong>교육명</strong></td>
+						                 <td align="left"><strong><form:input  path="eduNm" name="eduNm" type="text" size="93" value="${resultEdu.eduNm}" /></strong></td>
+						             </tr>
+						         </table>	
+						     </td> 
+						  </tr>
+						  <tr height="30">
+			                <td bgcolor="#E4EBF1">
+			                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						      		<tr align="left" bgcolor="#E4EBF1">
+						      			 <td width="70"><strong>교육시작일</strong></td>
+						                 <td align="left"><strong><form:input  path="eduStartDate" name="eduStartDate" type="text" size="23" value="${resultEdu.eduStartDate}" /></strong></td>
+						                 <td align="center" width="70"><strong>교육종료일</strong></td>
+						                 <td align="left"><strong><form:input  path="eduEndDate" name="eduEndDate" type="text" size="20" value="${resultEdu.eduEndDate}" /></strong></td>
+						                 <td align="center" width="70"><strong>교육기관</strong></td>
+						                 <td align="left"><strong><form:input  path="eduAgency" name="eduAgency" type="text" size="20" value="${resultEdu.eduAgency}" /></strong></td>
+						             </tr>
+						         </table>	
+						     </td> 
+						  </tr>
+						</c:forEach>		    	
+		    	</c:otherwise>
+		    </c:choose>		    
 				  <!-- for  end-->
-				  </table>
-				<!--   <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			 <td width="70"><strong>교육명</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="93"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			 <td width="70"><strong>교육시작일</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="23"></strong></td>
-				                 <td align="center" width="70"><strong>교육종료일</strong></td>
-				                 <td align="left"><strong><input name="textfield332542" type="text" size="20"></strong></td>
-				                 <td align="center" width="70"><strong>교육기관</strong></td>
-				                 <td align="left"><strong><input name="textfield3325422" type="text" size="23"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			 <td width="70"><strong>교육명</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="93"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			 <td width="70"><strong>교육시작일</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="23"></strong></td>
-				                 <td align="center" width="70"><strong>교육종료일</strong></td>
-				                 <td align="left"><strong><input name="textfield332542" type="text" size="20"></strong></td>
-				                 <td align="center" width="70"><strong>교육기관</strong></td>
-				                 <td align="left"><strong><input name="textfield3325422" type="text" size="23"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr> 
-				</table>-->
-		    <!-- </div> -->
+			</table>				
 		</div>
 		<div id="sysbtn">
     		<ul>
     			<li>
                     <span class="btn_blue_l">
                         <!-- <a href="javascript:fn_egov_selectList();">저장</a> -->
-                        <a href="javascript:fn_save();">저장</a>
+                        <a href="javascript:fn_save('edu');">저장</a>
                         <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
                     </span>
                 </li>

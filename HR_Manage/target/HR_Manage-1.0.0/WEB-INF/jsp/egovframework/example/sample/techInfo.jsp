@@ -3,7 +3,9 @@
 <%@ taglib prefix="form"      uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
 <%@ taglib prefix="spring"    uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
+
   /**
   * @Class Name : egovSampleRegister.jsp
   * @Description : Sample Register 화면
@@ -75,23 +77,31 @@
     		}
         	else if(value == '1'){
         		// 교육 정보
-        		location.href = "<c:url value='/addEduView.do'/>";
+        		alert($("#memberNo").val());
+        		/* location.href='/addEduView.do?memberNo='+$("#memberNo").val();  */
+        		/* location.href = "<c:url value='/addEduView.do'/>"; */
+        		location.href = '/tabView.do?viewNm=' + 'eduNgrad'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}
         	else if(value == '2'){
         		// 자격증 및 보유기술 정보
-        		location.href = "<c:url value='/addTechView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'licenseNtech'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '3'){
         		// 프로젝트 정보
-        		location.href = "<c:url value='/addProjectView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'project'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '4'){
         		// 경력정보
-        		location.href = "<c:url value='/addCareerView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'career'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else {
         		// 근무정보
-        		location.href = "<c:url value='/addWorkView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'work'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}        	
         }
         
@@ -152,11 +162,11 @@
 	                    <tr> 
 	                      <td width="97" height="31" align="center" bgcolor="#E4EBF1"><strong>사원명</strong></td>
 	                      <td width="128" align="center" bgcolor="#E4EBF1">
-	                      	<form:input type="text" path="memberKnm" name="memberKnm" />
+	                      	<form:input type="text" path="memberKnm" name="memberKnm" value="${resultMember.memberKnm}"  readonly="true" />
 	                      </td>
 	                      <td width="131" align="center" bgcolor="#E4EBF1"><strong> 주민등록번호 </strong></td>
 	                      <td width="239" align="center" bgcolor="#E4EBF1">
-	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" /></td>
+	                      	<form:input path="rrn1" name="rrn1" type="text" size="15"  value="${resultMember.rrn1}" readonly="true" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" value="${resultMember.rrn2}" readonly="true"  /></td>
 	                    </tr>
 	                  	</table>
 	                  </td>
@@ -175,54 +185,38 @@
 		        </tr>  	 
 		      </table>
 		      <table width="100%"  border="0" cellpadding="0" cellspacing="0">
-		      	<tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			<td width="70"><strong>자격 증명</strong></td>
-				                 <td width="90" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
-				                 <td width="50" align="left"><strong>취득일</strong></td>
-				                 <td width="120" align="left"><strong><input name="textfield332542" type="text" size="15"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			<td width="70"><strong>자격 증명</strong></td>
-				                 <td width="90" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
-				                 <td width="50" align="left"><strong>취득일</strong></td>
-				                 <td width="120" align="left"><strong><input name="textfield332542" type="text" size="15"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			<td width="70"><strong>자격 증명</strong></td>
-				                 <td width="90" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
-				                 <td width="50" align="left"><strong>취득일</strong></td>
-				                 <td width="120" align="left"><strong><input name="textfield332542" type="text" size="15"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			<td width="70"><strong>자격 증명</strong></td>
-				                 <td width="90" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
-				                 <td width="50" align="left"><strong>취득일</strong></td>
-				                 <td width="120" align="left"><strong><input name="textfield332542" type="text" size="15"></strong></td>
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
+		      <c:choose>
+		    	<c:when test="${fn:length(resultLicense) eq 0}">
+		    		<tr height="30">
+		                <td bgcolor="#E4EBF1">
+		                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					      		<tr align="left" bgcolor="#E4EBF1">
+					      			<td width="70"><strong>자격 증명</strong></td>
+					                 <td width="90" align="left"><strong><form:input path="licenseNm" name="licenseNm" type="text" size="30" /></strong></td>
+					                 <td width="50" align="left"><strong>취득일</strong></td>
+					                 <td width="120" align="left"><strong><form:input path="lDate" name="lDate" type="text" size="15" /></strong></td>
+					             </tr>
+					         </table>	
+					     </td> 
+					  </tr>
+		    	</c:when>
+		    	<c:otherwise>
+			      <c:forEach var="resultLicense" items="${resultLicense}" varStatus="status">
+			      	<tr height="30">
+		                <td bgcolor="#E4EBF1">
+		                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					      		<tr align="left" bgcolor="#E4EBF1">
+					      			<td width="70"><strong>자격 증명</strong></td>
+					                 <td width="90" align="left"><strong><form:input path="licenseNm" name="licenseNm" type="text" size="30" value="${resultLicense.licenseNm}" /></strong></td>
+					                 <td width="50" align="left"><strong>취득일</strong></td>
+					                 <td width="120" align="left"><strong><form:input path="lDate" name="lDate" type="text" size="15" value="${resultLicense.lDate}" /></strong></td>
+					             </tr>
+					         </table>	
+					     </td> 
+					  </tr>
+					 </c:forEach>
+				  </c:otherwise>
+				</c:choose>
 		      </table>
 		      <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	      		<tr>
@@ -237,7 +231,51 @@
 		        </tr>  	 
 		      </table>
 		      <table width="100%"  border="0" cellpadding="0" cellspacing="0">
-		      	<tr height="30">
+		      <c:choose>
+		    	<c:when test="${fn:length(resultTech) eq 0}">
+		    		<tr height="30">
+		                <td bgcolor="#E4EBF1">
+		                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					      		<tr align="left" bgcolor="#E4EBF1">
+					      			 <td width="70"><strong>보유기술</strong></td>
+					                 <td align="left"><strong><form:input path="techNm" name="techNm" type="text" size="60" /></strong></td>
+					                 <td width="50" align="left"><strong>숙련도</strong></td>
+					                 <td width="130"align="center">
+					                 	<strong>
+					                 		<input type="radio" path="tLevel" name="tLevel" value="1" /> 초 
+		                           			<input type="radio" path="tLevel" name="tLevel" value="2" /> 중
+					                 		<input type="radio" path="tLevel" name="tLevel" value="3" /> 고
+					                 	</strong>
+					                 </td>				                 
+					             </tr>
+					         </table>	
+					     </td> 
+					  </tr>
+		    	</c:when>
+		    	<c:otherwise>
+			      <c:forEach var="resultTech" items="${resultTech}" varStatus="status">
+			      	<tr height="30">
+		                <td bgcolor="#E4EBF1">
+		                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					      		<tr align="left" bgcolor="#E4EBF1">
+					      			 <td width="70"><strong>보유기술</strong></td>
+					                 <td align="left"><strong><form:input path="techNm" name="techNm" type="text" size="60" value="${resultTech.techNm}" /></strong></td>
+					                 <td width="50" align="left"><strong>숙련도</strong></td>
+					                 <td width="130"align="center">
+					                 	<strong>
+					                 		<input type="radio" path="tLevel" name="tLevel" value="1" <c:if test="${resultTech.tLevel eq '1' }">checked="checked"</c:if>/> 초 
+		                           			<input type="radio" path="tLevel" name="tLevel" value="2" <c:if test="${resultTech.tLevel eq '2' }">checked="checked"</c:if>/> 중
+					                 		<input type="radio" path="tLevel" name="tLevel" value="3" <c:if test="${resultTech.tLevel eq '3' }">checked="checked"</c:if>/> 고
+					                 	</strong>
+					                 </td>				                 
+					             </tr>
+					         </table>	
+					     </td> 
+					  </tr>
+					 </c:forEach>
+				</c:otherwise>
+			</c:choose>
+				  <%-- <tr height="30">
 	                <td bgcolor="#E4EBF1">
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
@@ -312,26 +350,7 @@
 				             </tr>
 				         </table>	
 				     </td> 
-				  </tr>
-				  <tr height="30">
-	                <td bgcolor="#E4EBF1">
-	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				      		<tr align="left" bgcolor="#E4EBF1">
-				      			 <td width="70"><strong>보유기술</strong></td>
-				                 <td align="left"><strong><input name="textfield33254" type="text" size="60"></strong></td>
-				                 <td width="50" align="left"><strong>숙련도</strong></td>
-				                 <td width="130"align="center">
-				                 	<strong>
-				                 		<input type="radio" path="calendar" name="calendar" value="1" <c:if test="${sampleVO.calendar eq '1' }">checked="checked"</c:if>/> 초 
-	                           			<input type="radio" path="calendar" name="calendar" value="2" <c:if test="${sampleVO.calendar eq '2' }">checked="checked"</c:if>/> 중
-				                 		<input type="radio" path="calendar" name="calendar" value="2" <c:if test="${sampleVO.calendar eq '2' }">checked="checked"</c:if>/> 고
-				                 	</strong>
-				                 </td>
-				                 
-				             </tr>
-				         </table>	
-				     </td> 
-				  </tr>
+				  </tr> --%>
 				</table>
 		    <!-- </div> -->
 		</div>

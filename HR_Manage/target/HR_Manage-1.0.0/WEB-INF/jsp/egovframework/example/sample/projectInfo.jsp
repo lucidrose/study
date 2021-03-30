@@ -75,23 +75,31 @@
     		}
         	else if(value == '1'){
         		// 교육 정보
-        		location.href = "<c:url value='/addEduView.do'/>";
+        		alert($("#memberNo").val());
+        		/* location.href='/addEduView.do?memberNo='+$("#memberNo").val();  */
+        		/* location.href = "<c:url value='/addEduView.do'/>"; */
+        		location.href = '/tabView.do?viewNm=' + 'eduNgrad'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}
         	else if(value == '2'){
         		// 자격증 및 보유기술 정보
-        		location.href = "<c:url value='/addTechView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'licenseNtech'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '3'){
         		// 프로젝트 정보
-        		location.href = "<c:url value='/addProjectView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'project'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '4'){
         		// 경력정보
-        		location.href = "<c:url value='/addCareerView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'career'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else {
         		// 근무정보
-        		location.href = "<c:url value='/addWorkView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'work'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}        	
         }
         
@@ -152,11 +160,11 @@
 	                    <tr> 
 	                      <td width="97" height="31" align="center" bgcolor="#E4EBF1"><strong>사원명</strong></td>
 	                      <td width="128" align="center" bgcolor="#E4EBF1">
-	                      	<form:input type="text" path="memberKnm" name="memberKnm" />
+	                      	<form:input type="text" path="memberKnm" name="memberKnm" value="${resultMember.memberKnm}" readonly="true"  />
 	                      </td>
 	                      <td width="131" align="center" bgcolor="#E4EBF1"><strong> 주민등록번호 </strong></td>
 	                      <td width="239" align="center" bgcolor="#E4EBF1">
-	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" /> - <form:input path = "rrn2" name="rrn2" type="text" size="15" /></td>
+	                      	<form:input path="rrn1" name="rrn1" type="text" size="15" value="${resultMember.rrn1}" readonly="true"  /> - <form:input path = "rrn2" name="rrn2" type="text" size="15"  value="${resultMember.rrn2}" readonly="true"  /></td>
 	                    </tr>
 	                  	</table>
 	                  </td>
@@ -177,11 +185,11 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>프로젝트명</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="projectNm" name="projectNm" type="text" size="30" value="${resultProject.projectNm}" /></strong></td>
 				                 <td align="center"><strong>참여기간</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="15"> ~ <input name="textfield332542" type="text" size="15">
+				                 		<form:input path="pStartDate" name="pStartDate" type="text" size="15" value="${resultProject.pStartDate}" /> ~ <form:input path="pEndDate" name="pEndDate" type="text" size="15" value="${resultProject.pEndDate}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -193,11 +201,11 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>고객사</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="client" name="client" type="text" size="30" value="${resultProject.client}" /></strong></td>
 				                 <td align="center"><strong>근무회사</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="35">
+				                 		<form:input path="workCompany" name="workCompany" type="text" size="35" value="${resultProject.workCompany}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -212,16 +220,16 @@
 				                 <td width="160" align="left">
 				                 	<strong>
 				                 		<select style="width:207px;">
-			                             	<option value="" <c:if test="${sampleVO.moneyType eq 'M'}"> selected </c:if>>선택하세요</option>
-			                             	<option value="1" <c:if test="${sampleVO.moneyType eq 'W'}"> selected </c:if>>1</option>
-			                             	<option value="2" <c:if test="${sampleVO.moneyType eq 'D'}"> selected </c:if>>2</option>
+			                             	<option value="">선택하세요</option>
+			                             	<option value="1" <c:if test="${resultProject.field eq '1'}"> selected </c:if>>개발</option>
+			                             	<option value="2" <c:if test="${resultProject.field eq '2'}"> selected </c:if>>운영</option>
 			                             </select> 
 				                 	</strong>
 				                 </td>
 				                 <td align="center"><strong>역할</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="35">
+				                 		<form:input path="part" name="part" type="text" size="35" value="${resultProject.part}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -248,11 +256,11 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>기종</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="modelNm" name="modelNm" type="text" size="30" value="${resultProject.modelNm}" /></strong></td>
 				                 <td align="center"><strong>OS</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="35">
+				                 		<form:input path="os" name="os" type="text" size="35" value="${resultProject.os}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -264,11 +272,11 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>언어</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="language" name="language" type="text" size="30" value="${resultProject.language}" /></strong></td>
 				                 <td align="center"><strong>DBMS</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="35">
+				                 		<form:input path="dbms" name="dbms" type="text" size="35" value="${resultProject.dbms}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -280,11 +288,11 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>TOOL</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="30"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="tool" name="tool" type="text" size="30" value="${resultProject.tool}" /></strong></td>
 				                 <td align="center"><strong>통신</strong></td>
 				                 <td width="250" align="left">
 				                 	<strong>
-				                 		<input name="textfield332542" type="text" size="35">
+				                 		<form:input path="socket" name="socket" type="text" size="35" value="${resultProject.socket}" />
 				                 	</strong>
 				                 </td>
 				             </tr>
@@ -296,7 +304,7 @@
 	                	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				      		<tr align="left" bgcolor="#E4EBF1">
 				      			<td width="100" align="center"><strong>기타</strong></td>
-				                 <td width="160" align="left"><strong><input name="textfield33254" type="text" size="87"></strong></td>
+				                 <td width="160" align="left"><strong><form:input path="remark" name="remark" type="text" size="87" value="${resultProject.remark}" /></strong></td>
 				             </tr>
 				         </table>	
 				     </td> 

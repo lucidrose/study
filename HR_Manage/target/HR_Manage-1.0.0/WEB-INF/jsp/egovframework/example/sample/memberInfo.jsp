@@ -71,28 +71,43 @@
         }
         
         function fn_menuSelect(value) {
+        	
+        	if($("#memberNo").val() == null || $("#memberNo").val() == "")
+        	{
+        		alert("사원정보를 먼저 입력 후 저장해 주세요");
+        		return false;
+        	}
+        	
         	if(value == '0'){
         		location.href = "<c:url value='/addView.do'/>";
     		}
         	else if(value == '1'){
         		// 교육 정보
-        		location.href = "<c:url value='/addEduView.do'/>";
+        		alert($("#memberNo").val());
+        		/* location.href='/addEduView.do?memberNo='+$("#memberNo").val();  */
+        		/* location.href = "<c:url value='/addEduView.do'/>"; */
+        		location.href = '/tabView.do?viewNm=' + 'eduNgrad'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}
         	else if(value == '2'){
         		// 자격증 및 보유기술 정보
-        		location.href = "<c:url value='/addTechView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'licenseNtech'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '3'){
         		// 프로젝트 정보
-        		location.href = "<c:url value='/addProjectView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'project'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else if(value == '4'){
         		// 경력정보
-        		location.href = "<c:url value='/addCareerView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'career'
+	      	    + '&memberNo=' + $("#memberNo").val();
     		}
         	else {
         		// 근무정보
-        		location.href = "<c:url value='/addWorkView.do'/>";
+        		location.href = '/tabView.do?viewNm=' + 'work'
+	      	    + '&memberNo=' + $("#memberNo").val();
         	}        	
         }
         
